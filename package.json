@@ -4,6 +4,7 @@
   "description": "",
   "main": "test.js",
   "dependencies": {
+    "jquery": "^3.3.1",
     "leancloud-realtime": "^3.5.7",
     "leancloud-storage": "^3.6.6",
     "plupload": "^2.3.6",

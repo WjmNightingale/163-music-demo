@@ -52,8 +52,11 @@ input {
     background: #d4d4d4;
 }
 
-.sonsList {
+.songList-container {
     flex-grow: 1;
+}
+
+.sonsList {
     text-align: left;
     border-top: 1px solid #999;
 }
