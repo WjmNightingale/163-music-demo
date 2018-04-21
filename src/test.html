@@ -20,6 +20,7 @@
         <aside>
             <div class="newSong"></div>
             <div id="songList-container" class="songList-container">
+                <ul class="songsList"></ul>
             </div>
             <div id="uploadArea" class="uploadArea">
                 <div id="uploadContainer" class="draggable">
@@ -37,32 +38,12 @@
 
     <audio controls src="http://p7fonu2ax.bkt.clouddn.com/Timirage%20-%20Still.mp3"></audio>
 
+    <script src="js/initializers/av.js"></script>
     <script src="js/event-hub.js"></script>
     <script src="js/new-song.js"></script>
     <script src="js/song-form.js"></script>
     <script src="js/song-list.js"></script>
     <script src="js/upload-song.js"></script>
-    <!-- <script src="js/qiniu-uploaad.js"></script> -->
-    <!-- <script>
-        console.log(AV)
-        var APP_ID = 'kAXqymYRvh8tvbbnaNKY60WR-gzGzoHsz'
-        var APP_KEY = 'kKqS6CGBadve62ypi4l3cOHp'
-        AV.init({
-            appId: APP_ID,
-            appKey: APP_KEY
-        })
-        var TestObject = AV.Object.extend('Playlist')
-        var testObject =  new TestObject()
-        testObject.save({
-            name: 'test',
-            coverImg: 'test',
-            createdId: 'test',
-            description: 'test',
-            songs: ['test','test']
-        }).then((object) => {
-            alert('leanCloud Rocks')
-        })
-    </script> -->
 </body>
 
 

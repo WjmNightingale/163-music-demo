@@ -56,19 +56,19 @@ input {
     flex-grow: 1;
 }
 
-.sonsList {
+.songsList {
     text-align: left;
     border-top: 1px solid #999;
 }
 
-.sonsList>li {
+.songsList>li {
     border-bottom: 1px solid #ddd;
     padding: 10px;
     /* margin-left: 10px;
     margin-right: 10px; */
 }
 
-.sonsList>li.active {
+.songsList>li.active {
     background: #d4d4d4;
 }
 

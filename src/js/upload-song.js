@@ -1,4 +1,5 @@
 {
+    // 本地歌曲上传七牛云生成外链
     let view = {
         el: '.uploadArea',
         find: function (selector) {
@@ -48,12 +49,14 @@
                         let sourceLink = `http://${domain}/${key}`
                         uploadStatus.textContent = '上传完毕'
                         window.eventHub.emit('upload', {
-                            link: sourceLink,
-                            filename: filename
+                            name: filename,
+                            singer: 'test',
+                            url: sourceLink,
                         })
                         console.log({
-                            link: sourceLink,
-                            filename: filename
+                            name: name,
+                            singer: 'test',
+                            url: sourceLink,
                         })
                     },
                     'Error': function (up, err, errTip) {
