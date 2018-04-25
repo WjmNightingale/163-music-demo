@@ -7,7 +7,6 @@
         },
         template: `
         <form action="">
-                <h2>新建歌曲</h2>
                 <div class="row">
                     <label for="">歌名
                     </label>
@@ -38,6 +37,11 @@
             })
             console.log(html)
             $(this.el).html(html)
+            if (data.id) {
+                $(this.el).prepend(' <h2>编辑歌曲</h2>')
+            } else {
+                $(this.el).prepend(' <h2>新建歌曲</h2>')
+            }
         },
         reset() {
             this.render({})
@@ -76,8 +80,11 @@
             })
         },
         update(id) {
-            // let query = new AV.Query('Song')
-            //  return query.get(id).then()
+            var todo = AV.Object.createWithoutData('Todo', '5745557f71cfe40068c6abe0');
+            // 修改属性
+            todo.set('content', '每周工程师会议，本周改为周三下午3点半。');
+            // 保存到云端
+            todo.save();
         }
     }
     let controller = {
@@ -97,11 +104,15 @@
                 need.map((string) => {
                     data[string] = this.view.$el.find(`[name=${string}]`).val()
                 })
-                this.model.create(data).then(() => {
-                    console.log(this.model.data)
-                    this.view.reset()
-                    window.eventHub.emit('create', this.model.data)
-                })
+                if (this.model.data.id) {
+
+                } else {
+                    this.model.create(data).then(() => {
+                        console.log(this.model.data)
+                        this.view.reset()
+                        window.eventHub.emit('create', this.model.data)
+                    })
+                }
             })
         },
         bindEventHub() {
@@ -109,7 +120,10 @@
                 this.view.render(data)
             })
             window.eventHub.on('select', (data) => {
-                console.log('form表单拿到了id', data.id)
+                console.log('form表单拿到被选择的歌曲', data)
+                this.model.data = data
+                this.view.render(this.model.data)
+                console.log(this.model.data)
                 songId = data.id
             })
         },
