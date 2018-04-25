@@ -13,6 +13,13 @@
                 $ul.append(li)
             })
         },
+        activeItem(li) {
+            let $li = $(li)
+            console.log('li--')
+            console.log($li)
+            console.log($li.siblings)
+            $li.addClass('active').siblings().removeClass('active')
+        },
         clearActive() {
             $(this.el).find('.active').removeClass('active')
         }
@@ -24,25 +31,38 @@
         find() {
             let query = new AV.Query('Song')
             return query.find().then((songs) => {
-                console.log(songs)
                 this.data.songs = songs.map((song) => {
                     return {
                         id: song.id,
                         ...song.attributes
                     }
                 })
-                console.log(this.data.songs)
                 return songs
             }, (error) => {
                 console.log(error)
             })
-        }
+        },
     }
     let controller = {
         init(view, model) {
             this.view = view
             this.model = model
             this.view.render(this.model.data)
+            this.bindEvents()
+            this.getAllsongs()
+
+        },
+        getAllsongs() {
+            return this.model.find().then(() => {
+                this.view.render(this.model.data)
+            })
+        },
+        bindEvents() {
+            $(this.view.el).on('click','li',(e) => {
+                this.view.activeItem(e.currentTarget)
+            })
+        },
+        bindEventHub() {
             window.eventHub.on('upload', () => {
                 this.view.clearActive()
             })
@@ -50,9 +70,6 @@
                 // 深拷贝
                 let newData = JSON.parse(JSON.stringify(data))
                 this.model.data.songs.push(newData)
-                this.view.render(this.model.data)
-            })
-            this.model.find().then(() => {
                 this.view.render(this.model.data)
             })
         }
