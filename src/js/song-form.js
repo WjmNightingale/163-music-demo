@@ -111,15 +111,8 @@
             window.eventHub.on('select', (data) => {
                 console.log('form表单拿到了id', data.id)
                 songId = data.id
-                this.cancelActive()
             })
         },
-        active() {
-            $(this.view.el).addClass('active')
-        },
-        cancelActive() {
-            $(this.view.el).removeClass('active')
-        }
     }
     controller.init(view, model)
 }
