@@ -1,3 +1,4 @@
+// eventHub --- 事件订阅发布机制
 window.eventHub = {
     events: {}, // 事件存储中心
     emit(eventName,data) { // 发布

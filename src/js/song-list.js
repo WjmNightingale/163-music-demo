@@ -1,5 +1,5 @@
 {
-    // 已上传歌曲列表
+    // 已上传歌曲列表 --- 查找功能
     let view = {
         el: '#songList-container',
         render(data) {
@@ -20,6 +20,22 @@
     let model = {
         data: {
             songs: []
+        },
+        find() {
+            let query = new AV.Query('Song')
+            return query.find().then((songs) => {
+                console.log(songs)
+                this.data.songs = songs.map((song) => {
+                    return {
+                        id: song.id,
+                        ...song.attributes
+                    }
+                })
+                console.log(this.data.songs)
+                return songs
+            }, (error) => {
+                console.log(error)
+            })
         }
     }
     let controller = {
@@ -34,6 +50,9 @@
                 // 深拷贝
                 let newData = JSON.parse(JSON.stringify(data))
                 this.model.data.songs.push(newData)
+                this.view.render(this.model.data)
+            })
+            this.model.find().then(() => {
                 this.view.render(this.model.data)
             })
         }
