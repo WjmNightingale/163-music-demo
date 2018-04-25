@@ -34,7 +34,7 @@
             console.log(placeholders)
             let html = this.template
             placeholders.map((string) => {
-                html = html.replace(`__${string}__`,data[string] || '')
+                html = html.replace(`__${string}__`, data[string] || '')
             })
             console.log(html)
             $(this.el).html(html)
@@ -74,6 +74,10 @@
             }, (err) => {
                 console.log(err)
             })
+        },
+        update(id) {
+            // let query = new AV.Query('Song')
+            //  return query.get(id).then()
         }
     }
     let controller = {
@@ -83,9 +87,7 @@
             this.view.init()
             this.view.render(this.model.data)
             this.bindEvents()
-            window.eventHub.on('upload', (data) => {
-                this.view.render(data)
-            })
+            this.bindEventHub()
         },
         bindEvents() {
             this.view.$el.on('submit', 'form', (e) => {
@@ -98,9 +100,25 @@
                 this.model.create(data).then(() => {
                     console.log(this.model.data)
                     this.view.reset()
-                    window.eventHub.emit('create',this.model.data)
+                    window.eventHub.emit('create', this.model.data)
                 })
             })
+        },
+        bindEventHub() {
+            window.eventHub.on('upload', (data) => {
+                this.view.render(data)
+            })
+            window.eventHub.on('select', (data) => {
+                console.log('form表单拿到了id', data.id)
+                songId = data.id
+                this.cancelActive()
+            })
+        },
+        active() {
+            $(this.view.el).addClass('active')
+        },
+        cancelActive() {
+            $(this.view.el).removeClass('active')
         }
     }
     controller.init(view, model)

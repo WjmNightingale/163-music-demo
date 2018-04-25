@@ -6,7 +6,7 @@
             let {
                 songs
             } = data
-            let liList = songs.map((song) => $('<li></li>').text(song.name))
+            let liList = songs.map((song) => $('<li></li>').text(song.name).attr('data-song-id',song.id))
             let $ul = $(this.el).find('ul')
             $ul.empty()
             liList.map((li) => {
@@ -14,11 +14,7 @@
             })
         },
         activeItem(li) {
-            let $li = $(li)
-            console.log('li--')
-            console.log($li)
-            console.log($li.siblings)
-            $li.addClass('active').siblings().removeClass('active')
+            $(li).addClass('active').siblings().removeClass('active')
         },
         clearActive() {
             $(this.el).find('.active').removeClass('active')
@@ -60,6 +56,8 @@
         bindEvents() {
             $(this.view.el).on('click','li',(e) => {
                 this.view.activeItem(e.currentTarget)
+                let songId = e.currentTarget.getAttribute('data-song-id')
+                window.eventHub.emit('select',{id: songId})
             })
         },
         bindEventHub() {
