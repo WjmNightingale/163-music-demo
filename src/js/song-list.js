@@ -45,8 +45,8 @@
             this.model = model
             this.view.render(this.model.data)
             this.bindEvents()
+            this.bindEventHub()
             this.getAllsongs()
-
         },
         getAllsongs() {
             return this.model.find().then(() => {
@@ -77,6 +77,10 @@
                 let newData = JSON.parse(JSON.stringify(data))
                 this.model.data.songs.push(newData)
                 this.view.render(this.model.data)
+            })
+            window.eventHub.on('new', () => {
+                console.log('监听到了new事件')
+                this.view.clearActive()
             })
         }
     }

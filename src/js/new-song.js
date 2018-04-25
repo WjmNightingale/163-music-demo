@@ -9,9 +9,10 @@
         },
         active() {
             $(this.el).addClass('active')
+            //被选中时发布一个'new'事件
+            window.eventHub.emit('new')
         },
         cancelActive() {
-            console.log('1111')
             $(this.el).removeClass('active')
         }
     }

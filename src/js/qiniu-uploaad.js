@@ -46,7 +46,6 @@
                 // 获取上传成功后的文件的Url
                 //  'http://' + domain + '/' + key
                 var sourceLink = `http://${domain}/${key}`
-                console.log(sourceLink)
                 uploadStatus.textContent = sourceLink + `歌曲名字：${filename}`
             },
             'Error': function (up, err, errTip) {

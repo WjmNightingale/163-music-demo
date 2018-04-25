@@ -28,14 +28,11 @@
             </form>
         `,
         render(data = {}) {
-            console.log(data)
             let placeholders = 'name singer url'.split(' ')
-            console.log(placeholders)
             let html = this.template
             placeholders.map((string) => {
                 html = html.replace(`__${string}__`, data[string] || '')
             })
-            console.log(html)
             $(this.el).html(html)
             if (data.id) {
                 $(this.el).prepend(' <h2>编辑歌曲</h2>')
@@ -108,7 +105,6 @@
 
                 } else {
                     this.model.create(data).then(() => {
-                        console.log(this.model.data)
                         this.view.reset()
                         window.eventHub.emit('create', this.model.data)
                     })
@@ -120,11 +116,13 @@
                 this.view.render(data)
             })
             window.eventHub.on('select', (data) => {
-                console.log('form表单拿到被选择的歌曲', data)
                 this.model.data = data
                 this.view.render(this.model.data)
-                console.log(this.model.data)
                 songId = data.id
+            })
+            window.eventHub.on('new', () => {
+                this.model.data = {}
+                this.view.render(this.model.data)
             })
         },
     }
