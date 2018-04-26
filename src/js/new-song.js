@@ -9,8 +9,6 @@
         },
         active() {
             $(this.el).addClass('active')
-            //被选中时发布一个'new'事件
-            window.eventHub.emit('new')
         },
         cancelActive() {
             $(this.el).removeClass('active')
@@ -22,16 +20,17 @@
             this.view = view
             this.model = model
             this.view.render(this.model.data)
-            this.view.active()
             this.bindEventHub()
             $(this.view.el).on('click',(e) => {
-                this.view.active()
+                // 新增歌曲按钮被选中时发布一个showUploadArea事件
+                window.eventHub.emit('showUploadArea',{})
             })
         },
         bindEventHub() {
-            window.eventHub.on('upload', (data) => {
+            window.eventHub.on('showUploadArea', () => {
+                this.view.active()
             })
-            window.eventHub.on('select',(data) => {
+            window.eventHub.on('showForm',() => {
                 this.view.cancelActive()
             })
         }

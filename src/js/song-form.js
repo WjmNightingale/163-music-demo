@@ -1,7 +1,7 @@
 {
     // 歌曲信息保存至 leanCloud
     let view = {
-        el: '.page > main',
+        el: '.page > main > .formContainer',
         init() {
             this.$el = $(this.el)
         },
@@ -42,6 +42,12 @@
         },
         reset() {
             this.render({})
+        },
+        active() {
+            $(this.el).addClass('active')
+        },
+        clearActive() {
+            $(this.el).removeClass('active')
         }
     }
     let model = {
@@ -52,36 +58,22 @@
             createId: ''
         },
         create(data) {
+            // 存数据方法
             let Song = AV.Object.extend('Song')
             let song = new Song()
             for (let key in data) {
                 song.set(key, data[key])
             }
-            return song.save().then((newSong) => {
-                let {
-                    id,
-                    attributes
-                } = newSong
-                // Object.assign(thi.data,{
-                //     id: id,
-                //     name: attributes.name,
-                //     singer: attributes.singer,
-                //     url: attributes.url
-                // })
-                Object.assign(this.data, {
-                    id,
-                    ...attributes
-                })
-            }, (err) => {
-                console.log(err)
-            })
+            return song.save()
         },
-        update(id) {
-            var todo = AV.Object.createWithoutData('Todo', '5745557f71cfe40068c6abe0');
+        update(id, data) {
+            var Song = AV.Object.createWithoutData('Song', id);
             // 修改属性
-            todo.set('content', '每周工程师会议，本周改为周三下午3点半。');
+            for (let key in data) {
+                Song.set(key, data[key])
+            }
             // 保存到云端
-            todo.save();
+            return Song.save()
         }
     }
     let controller = {
@@ -90,6 +82,7 @@
             this.model = model
             this.view.init()
             this.view.render(this.model.data)
+            console.log()
             this.bindEvents()
             this.bindEventHub()
         },
@@ -101,27 +94,70 @@
                 need.map((string) => {
                     data[string] = this.view.$el.find(`[name=${string}]`).val()
                 })
-                if (this.model.data.id) {
+                console.log('表单提交')
+                console.log(data)
 
+                if (this.model.data.id) {
+                    // 编辑歌曲
+                    console.log('编辑歌曲')
+                    console.log(this.model.data)
+                    this.model.update(this.model.data.id, data).then((updatedSong) => {
+                        console.log('更新数据')
+                        console.log(updatedSong)
+                        let {
+                            id,
+                            attributes
+                        } = updatedSong
+                        Object.assign(this.model.data, {
+                            id,
+                            ...attributes
+                        })
+                        window.eventHub.emit('update', this.model.data)
+                    })
                 } else {
-                    this.model.create(data).then(() => {
+                    // 新增歌曲
+                    console.log('新增歌曲')
+                    this.model.create(data).then((newSong) => {
+                        console.log('存储成功！！！返回的数据为--')
+                        console.log(newSong)
+                        let {
+                            id,
+                            attributes
+                        } = newSong
+                        console.log('1')
+                        Object.assign(this.model.data, {
+                            id,
+                            ...attributes
+                        })
+                        console.log('2')
+                        // 清空from表单
                         this.view.reset()
-                        window.eventHub.emit('create', this.model.data)
+                        // 发布一个save事件
+                        console.log()
+                        window.eventHub.emit('save', this.model.data)
+                    }, (err) => {
+                        console.log(err)
                     })
                 }
+                console.log('结束')
             })
         },
         bindEventHub() {
-            window.eventHub.on('upload', (data) => {
-                this.view.render(data)
-            })
-            window.eventHub.on('select', (data) => {
+            window.eventHub.on('showForm', (data) => {
+                this.view.active()
+                console.log('从歌曲列表模块传递过来的信息')
+                console.log(data)
                 this.model.data = data
                 this.view.render(this.model.data)
-                songId = data.id
+                // songId = data.id
             })
-            window.eventHub.on('new', () => {
-                this.model.data = {}
+            window.eventHub.on('create', (data) => {
+                console.log('新增歌曲上传完毕，七牛云返回的信息')
+                console.log(data)
+                this.view.active()
+                // 将歌曲信息渲染到from表单
+                let newData = JSON.parse(JSON.stringify(data))
+                this.model.data = newData
                 this.view.render(this.model.data)
             })
         },

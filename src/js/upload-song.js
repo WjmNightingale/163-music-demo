@@ -4,6 +4,12 @@
         el: '.uploadArea',
         find: function (selector) {
             return $(this.el).find(selector)[0]
+        },
+        active() {
+            $(this.el).addClass('active')
+        },
+        clearActive() {
+            $(this.el).removeClass('active')
         }
     }
     let model = {}
@@ -12,6 +18,7 @@
             this.view = view
             this.model = model
             this.initQiniu()
+            this.bindEventHub()
         },
         initQiniu() {
             let uploader = Qiniu.uploader({
@@ -48,14 +55,9 @@
                         //  'http://' + domain + '/' + key
                         let sourceLink = `http://${domain}/${key}`
                         uploadStatus.textContent = '上传完毕'
-                        window.eventHub.emit('upload', {
+                        window.eventHub.emit('create', {
                             name: filename,
-                            singer: 'test',
-                            url: sourceLink,
-                        })
-                        console.log({
-                            name: name,
-                            singer: 'test',
+                            singer: '自定义',
                             url: sourceLink,
                         })
                     },
@@ -66,6 +68,20 @@
                         //队列文件处理完毕后,处理相关的事情
                     }
                 }
+            })
+        },
+        bindEventHub() {
+            window.eventHub.on('showUploadArea', () => {
+                console.log('检测到新增歌曲被选择了')
+                this.view.active()
+            })
+            window.eventHub.on('showForm',() => {
+                console.log('检测到编辑歌曲被选择了')
+                this.view.clearActive()
+            })
+            window.eventHub.on('create',() => {
+                console.log('七牛云上传成功')
+                this.view.clearActive()
             })
         }
     }

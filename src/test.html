@@ -11,32 +11,44 @@
     <script src="../node_modules/plupload/js/plupload.min.js"></script>
     <script src="../vendors/moxie.js"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="//at.alicdn.com/t/font_643967_cnpjiyjqi05p14i.js"></script>
     <link rel="stylesheet" href="css/default.css">
 </head>
 
 <body>
-
+    <div class="topBar">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"></use>
+        </svg>
+        <span>网易云音乐</span>
+    </div>
     <div class="page">
         <aside>
-            <div class="newSong"></div>
             <div id="songList-container" class="songList-container">
+                <span class="textSongsList">歌曲列表</span>
                 <ul class="songsList"></ul>
             </div>
+            <div class="newSong"></div>
+        </aside>
+
+        <main>
             <div id="uploadArea" class="uploadArea">
                 <div id="uploadContainer" class="draggable">
-                    <div id="uploadButton" class="clickable">
-                        <span>点击或拖拽上传文件</span>
-                        <span>文件大小不超过40mb</span>
-                    </div>
+                    <span>点击或拖拽上传文件</span>
+                    <span>建议文件大小不超过40mb</span>
                 </div>
+                <button id="uploadButton" class="clickable">
+                    选择文件
+                </button>
                 <div id="uploadStatus"></div>
             </div>
-        </aside>
-        <main>
+            <div class="formContainer">
+                
+            </div>
         </main>
     </div>
 
-    <audio controls src="http://p7fonu2ax.bkt.clouddn.com/Timirage%20-%20Still.mp3"></audio>
+    <!-- <audio controls src="http://p7fonu2ax.bkt.clouddn.com/Timirage%20-%20Still.mp3"></audio> -->
 
     <script src="js/initializers/av.js"></script>
     <script src="js/event-hub.js"></script>
