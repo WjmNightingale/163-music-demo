@@ -30,34 +30,50 @@ input {
     fill: currentColor;
     overflow: hidden;
 }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    /* overflow: hidden; */
+}
 
 /* layout */
+
+.app {
+    padding: 2px 2px;
+    border-radius: 5px;
+    /* width: 1200px;
+    height: 600px; */
+}
 
 .topBar {
     /* border: 1px solid red; */
     padding: 10px 20px;
-    background: paleturquoise;
+    background: #c62f2f;
     display: flex;
     align-items: center;
+    /* border-radius: 5px; */
 }
 
 .topBar>svg {
     width: 40px;
     height: 40px;
     margin-right: 20px;
+    color: #fefcfc;
 }
 
 .topBar>span {
     font-size: 36px;
-    color: red;
+    color: #fefcfc;
 }
 
-.page {
+.feature {
     display: flex;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
-.page>aside {
+.feature>aside {
     display: flex;
     flex-direction: column;
     width: 200px;
@@ -65,7 +81,7 @@ input {
     /* margin-right: 20px;  */
 }
 
-.page>main {
+.feature>main {
     flex-grow: 1;
 }
 
@@ -105,6 +121,11 @@ input {
 .songsList>li {
     border-bottom: 1px solid #ddd;
     padding: 10px;
+    /* overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: red; */
     /* margin-left: 10px;
     margin-right: 10px; */
 }
@@ -113,38 +134,47 @@ input {
     background: #d4d4d4;
 }
 
+/* main */
+
+.feature>main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    background: burlywood;
+}
+
 .uploadArea {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid orange;
-   display: none;
+    display: none;
+    width: 400px;
+    height: 200px;
     background: white;
+    /* background: white; */
 }
+
 .uploadArea.active {
     display: block;
 }
 
-.uploadArea > .draggable {
+.uploadArea>.draggable {
     display: flex;
     flex-direction: column;
-    width: 600px;
-    height: 300px;
     align-items: center;
     justify-content: center;
+    width: 200px;
+    height: 100px;
     border-radius: 4px;
     border: 2px dashed orange;
     cursor: pointer;
     color: gray;
 }
 
-.uploadArea > .clickable {
+.uploadArea>.clickable {
     margin-top: 20px;
     font-size: 20px;
     background: #c62f2f;
@@ -159,22 +189,17 @@ input {
     cursor: pointer;
 }
 
-/* main */
-
-.page>main {
-    flex-grow: 1;
-    padding-left: 20px;
-    background: #d4d4d4;
-    position: relative;
-}
-
-.page>main>.formContainer {
+.feature>main>.editArea {
+    display: none;
     width: 100%;
     height: 100%;
-    display: none;
 }
-.page>main>.formContainer.active {
+
+.feature>main>.editArea.active {
     display: block;
+}
+.feature>main>.editArea>.remind {
+    display: none;
 }
 
 form {

@@ -16,36 +16,85 @@
 </head>
 
 <body>
-    <div class="topBar">
-        <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"></use>
-        </svg>
-        <span>网易云音乐</span>
-    </div>
-    <div class="page">
-        <aside>
-            <div id="songList-container" class="songList-container">
-                <span class="textSongsList">歌曲列表</span>
-                <ul class="songsList"></ul>
-            </div>
-            <div class="newSong"></div>
-        </aside>
-
-        <main>
-            <div id="uploadArea" class="uploadArea">
-                <div id="uploadContainer" class="draggable">
-                    <span>点击或拖拽上传文件</span>
-                    <span>建议文件大小不超过40mb</span>
+    <div class="app">
+        <!-- 顶部状态栏 -->
+        <div class="topBar">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"></use>
+            </svg>
+            <span>网易云音乐</span>
+        </div>
+        <div class="feature">
+            <!-- 已上传音乐列表 -->
+            <aside>
+                <div id="songList-container" class="songList-container">
+                    <span class="textSongsList">歌曲列表</span>
+                    <ul class="songsList"></ul>
                 </div>
-                <button id="uploadButton" class="clickable">
-                    选择文件
-                </button>
-                <div id="uploadStatus"></div>
-            </div>
-            <div class="formContainer">
-                
-            </div>
-        </main>
+                <div class="newSong"></div>
+            </aside>
+
+            <main>
+                <!-- <div class="introduction">
+                    <span>欢迎来到管理员后台</span>
+                </div> -->
+                <!-- 上传功能区视图 -->
+                <div id="uploadArea" class="uploadArea active">
+                    <div id="uploadContainer" class="draggable">
+                        <span>点击或拖拽上传文件</span>
+                        <span>建议文件大小不超过40mb</span>
+                    </div>
+                    <button id="uploadButton" class="clickable">
+                        选择文件
+                    </button>
+                    <div id="uploadStatus">111</div>
+                </div>
+                <!-- 编辑功能区视图 -->
+                <div class="editArea">
+                    <h2></h2>
+                    <form>
+                        <div class="row">
+                            <label for="">歌名
+                            </label>
+                            <input name="name" type="text" value="__name__">
+                        </div>
+                        <div class="row">
+                            <label for="">歌手
+                            </label>
+                            <input name="singer" type="text" value="__singer__">
+                        </div>
+                        <div class="row">
+                            <label for="">外链
+                            </label>
+                            <input name="url" type="text" value="__url__">
+                        </div>
+                        <div class="row action">
+                            <input type="submit" value="保存">
+                        </div>
+                    </form>
+                    <div class="remind">
+                        <div class="heading">
+                            <span>警告</span>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"></use>
+                            </svg>
+                        </div>
+                        <div class="content">
+                            <div class="row">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"></use>
+                                </svg>
+                                <span>您尚未保存，是否放弃编辑歌曲？</span>
+                            </div>
+                            <div class="row">
+                                <button>确认</button>
+                                <button>取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <!-- <audio controls src="http://p7fonu2ax.bkt.clouddn.com/Timirage%20-%20Still.mp3"></audio> -->

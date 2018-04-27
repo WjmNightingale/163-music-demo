@@ -1,43 +1,19 @@
 {
     // 歌曲信息保存至 leanCloud
     let view = {
-        el: '.page > main > .formContainer',
+        el: '.feature > main > .editArea',
         init() {
             this.$el = $(this.el)
         },
-        template: `
-        <form action="">
-                <div class="row">
-                    <label for="">歌名
-                    </label>
-                    <input name="name" type="text" value="__name__">
-                </div>
-                <div class="row">
-                    <label for="">歌手
-                    </label>
-                    <input name="singer" type="text" value="__singer__">
-                </div>
-                <div class="row">
-                    <label for="">外链
-                    </label>
-                    <input name="url" type="text" value="__url__">
-                </div>
-                <div class="row action">
-                    <input type="submit" value="保存">
-                </div>
-            </form>
-        `,
         render(data = {}) {
             let placeholders = 'name singer url'.split(' ')
-            let html = this.template
             placeholders.map((string) => {
-                html = html.replace(`__${string}__`, data[string] || '')
+                $(this.el).find(`input[value=__${string}__]`).val(data[string] || '')
             })
-            $(this.el).html(html)
             if (data.id) {
-                $(this.el).prepend(' <h2>编辑歌曲</h2>')
+                $(this.el).find('h2').text('编辑歌曲')
             } else {
-                $(this.el).prepend(' <h2>新建歌曲</h2>')
+                $(this.el).find('h2').text('新建歌曲')
             }
         },
         reset() {
@@ -55,7 +31,7 @@
             name: '',
             singer: '',
             url: '',
-            createId: ''
+            isChange: false
         },
         create(data) {
             // 存数据方法
@@ -82,17 +58,40 @@
             this.model = model
             this.view.init()
             this.view.render(this.model.data)
-            console.log()
-            this.bindEvents()
+            this.bindInputChange()
+            this.bindSubmit()
             this.bindEventHub()
         },
-        bindEvents() {
+        bindInputChange() {
+            this.view.$el.on('change', 'input[type="text"]', (e) => {
+                console.log('正在点击的元素')
+                console.log(e.currentTarget)
+            })
+            // console.log('正在监听input改变')
+            // let inputElements = this.view.$el.find('input[type="text"]')
+            // console.log(inputElements)
+            // for (let i = 0; i < inputElements.length; i++) {
+            //     const inputElement = inputElements[i]
+            //     inputElement.addEventListener('change',(e) => {
+            //         console.log('正在修改')
+            //     })
+            // }
+
+        },
+        bindSubmit() {
             this.view.$el.on('submit', 'form', (e) => {
                 e.preventDefault()
                 let need = 'name singer url'.split(' ')
                 let data = {}
                 need.map((string) => {
-                    data[string] = this.view.$el.find(`[name=${string}]`).val()
+                    let value = this.view.$el.find(`[name=${string}]`).val()
+                    if (value.trim().length > 0) {
+                        data[string] = value
+                    } else {
+                        alert('不允许提交空值')
+                        return
+                    }
+
                 })
                 console.log('表单提交')
                 console.log(data)
@@ -159,6 +158,9 @@
                 let newData = JSON.parse(JSON.stringify(data))
                 this.model.data = newData
                 this.view.render(this.model.data)
+            })
+            window.eventHub.on('showUploadArea', (data) => {
+                this.view.clearActive()
             })
         },
     }
