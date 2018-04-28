@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>管理页面</title>
-    <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
-    <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
-    <script src="../node_modules/plupload/js/plupload.min.js"></script>
-    <script src="../vendors/moxie.js"></script>
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="//at.alicdn.com/t/font_643967_7dsc7yopggy14i.js"></script>
     <link rel="stylesheet" href="css/default.css">
+    <script src="//at.alicdn.com/t/font_643967_wo2ynt320wtrzfr.js"></script>
 </head>
 
 <body>
@@ -31,9 +26,22 @@
                     <span class="textSongsList">歌曲列表</span>
                     <div class="horizon"></div>
                     <ul class="songsList">
+                        <li>第1首歌在哪里在哪里</li>
+                        <li class="active">第2首歌</li>
+                        <li>第3首歌</li>
+                        <li>第4首歌</li>
+                        <li>第5首歌</li>
+                        <li>第6首歌</li>
+                        <li>第7首歌</li>
+                        <li>第8首歌</li>
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
                     </ul>
                 </div>
-                <div class="newSong">
+                <div class="newSong active">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-xinjian"></use>
                     </svg>
@@ -42,28 +50,11 @@
             </aside>
 
             <main>
-                <div class="introduction active">
-                    <div class="row">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-huanyingye"></use>
-                        </svg>
-                        <span>欢迎来到管理员后台</span>
-                    </div>
-                    <div class="row">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-shezhi"></use>
-                        </svg>
-                        <span>新建歌曲 --- 上传新歌</span>
-                    </div>
-                    <div class="row">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-shezhi"></use>
-                        </svg>
-                        <span>点击歌曲 --- 编辑信息</span>
-                    </div>
-                </div>
+                <!-- <div class="introduction">
+                    <span>欢迎来到管理员后台</span>
+                </div> -->
                 <!-- 上传功能区视图 -->
-                <div id="uploadArea" class="uploadArea">
+                <div id="uploadArea" class="uploadArea ">
                     <div id="uploadContainer" class="draggable">
                         <span>点击或拖拽上传文件</span>
                         <span>建议文件大小不超过40mb</span>
@@ -75,7 +66,7 @@
                     <div id="uploadStatus" class="uploadStatus">loading...</div>
                 </div>
                 <!-- 编辑功能区视图 -->
-                <div class="editArea">
+                <div class="editArea active">
                     <div class="heading">
                         <span>新建歌曲</span>
                         <svg class="icon" aria-hidden="true">
@@ -87,23 +78,23 @@
                         <div class="row">
                             <label for="">歌名:
                             </label>
-                            <input name="name" type="text" value="name">
+                            <input name="name" type="text" value="这是歌名">
                         </div>
                         <div class="row">
                             <label for="">歌手:
                             </label>
-                            <input name="singer" type="text" value="singer">
+                            <input name="singer" type="text" value="这是歌手">
                         </div>
                         <div class="row">
                             <label for="">外链:
                             </label>
-                            <input name="url" type="text" value="url">
+                            <input name="url" type="text" value="这是外链">
                         </div>
                         <div class="row action">
                             <input type="submit" value="保存">
                         </div>
                     </form>
-                    <div class="remind">
+                    <div class="remind active ">
                         <div class="heading">
                             <span>警告</span>
                             <svg class="icon" aria-hidden="true">
@@ -118,8 +109,8 @@
                                 <span>您尚未保存，是否放弃编辑歌曲？</span>
                             </div>
                             <div class="action">
-                                <button class="confirm">确认</button>
-                                <button class="cancel">取消</button>
+                                <button>确认</button>
+                                <button>取消</button>
                             </div>
                         </div>
                     </div>
@@ -127,14 +118,9 @@
             </main>
         </div>
     </div>
-    <div id="fade" class="fade"></div>
+    <div id="fade" class="fade active"></div>
 
-    <script src="js/initializers/av.js"></script>
-    <script src="js/event-hub.js"></script>
-    <script src="js/new-song.js"></script>
-    <script src="js/song-form.js"></script>
-    <script src="js/song-list.js"></script>
-    <script src="js/upload-song.js"></script>
+    <!-- <audio controls src="http://p7fonu2ax.bkt.clouddn.com/Timirage%20-%20Still.mp3"></audio> -->
 </body>
 
 

@@ -8,12 +8,12 @@
         render(data = {}) {
             let placeholders = 'name singer url'.split(' ')
             placeholders.map((string) => {
-                $(this.el).find(`input[value=__${string}__]`).val(data[string] || '')
+                $(this.el).find(`input[value=${string}]`).val(data[string] || '')
             })
             if (data.id) {
-                $(this.el).find('h2').text('编辑歌曲')
+                $(this.el).find('.heading > span').text('编辑歌曲')
             } else {
-                $(this.el).find('h2').text('新建歌曲')
+                $(this.el).find('.heading > span').text('新建歌曲')
             }
         },
         reset() {
@@ -24,6 +24,17 @@
         },
         clearActive() {
             $(this.el).removeClass('active')
+        },
+        introductionClearActive() {
+            $('.feature > main > .introduction').removeClass('active')
+        },
+        remindActive() {
+            $('.feature > main > .editArea > .remind').addClass('active')
+            $('.fade').addClass('active')
+        },
+        remindClearActive() {
+            $('.feature > main > .editArea > .remind').removeClass('active')
+            $('.fade').removeClass('active')
         }
     }
     let model = {
@@ -31,7 +42,8 @@
             name: '',
             singer: '',
             url: '',
-            isChange: false
+            editAndSave: true,
+            origin: ''
         },
         create(data) {
             // 存数据方法
@@ -59,28 +71,48 @@
             this.view.init()
             this.view.render(this.model.data)
             this.bindInputChange()
+            this.bindRemindConfirm()
+            this.bindRemindCancel()
             this.bindSubmit()
             this.bindEventHub()
         },
         bindInputChange() {
             this.view.$el.on('change', 'input[type="text"]', (e) => {
-                console.log('正在点击的元素')
-                console.log(e.currentTarget)
+                // 歌曲信息发生改变了
+                console.log('歌曲信息发生改变了')
+                this.model.data.editAndSave = false
+                window.eventHub.emit('songIsEdit', this.model.data)
             })
-            // console.log('正在监听input改变')
-            // let inputElements = this.view.$el.find('input[type="text"]')
-            // console.log(inputElements)
-            // for (let i = 0; i < inputElements.length; i++) {
-            //     const inputElement = inputElements[i]
-            //     inputElement.addEventListener('change',(e) => {
-            //         console.log('正在修改')
-            //     })
-            // }
-
+        },
+        bindRemindConfirm() {
+            console.log('.action > .confirm')
+            $('.action > .confirm').on('click', (e) => {
+                console.log('点击确认')
+                // this.model.data.editAndSave = true
+                if (this.model.data.origin === 'newSong') {
+                    // 修改信息未保存点击新建歌曲，弹出提示框后点击确定显示上传功能区
+                    window.eventHub.emit('showUploadArea', null)
+                    this.view.remindClearActive()
+                } else if (this.model.data.origin === 'songList') {
+                    // 修改信息未保存编辑其他歌曲，弹出提示框后点击确定显示另外一个要编辑的歌曲信息
+                    console.log('修改信息未保存编辑其他歌曲')
+                    this.model.data.editAndSave = true
+                    window.eventHub.emit('songIsEdit', this.model.data)
+                    window.eventHub.emit('showForm')
+                    this.view.remindClearActive()
+                }
+            })
+        },
+        bindRemindCancel() {
+            $('.action > .cancel').on('click', (e) => {
+                this.view.remindClearActive()
+            })
         },
         bindSubmit() {
             this.view.$el.on('submit', 'form', (e) => {
                 e.preventDefault()
+                console.log('这里是保存按钮')
+                this.model.data.editAndSave = true
                 let need = 'name singer url'.split(' ')
                 let data = {}
                 need.map((string) => {
@@ -138,11 +170,13 @@
                         console.log(err)
                     })
                 }
+                window.eventHub.emit('songIsEdit', this.model.data)
                 console.log('结束')
             })
         },
         bindEventHub() {
             window.eventHub.on('showForm', (data) => {
+                this.view.introductionClearActive()
                 this.view.active()
                 console.log('从歌曲列表模块传递过来的信息')
                 console.log(data)
@@ -159,8 +193,22 @@
                 this.model.data = newData
                 this.view.render(this.model.data)
             })
-            window.eventHub.on('showUploadArea', (data) => {
+            window.eventHub.on('songIsEdit', (data) => {
+                console.log('监听到歌曲信息发生改变')
+                if (this.model.data.editAndSave) {
+                    console.log('点了保存')
+                } else {
+                    console.log('没点保存')
+                }
+
+            })
+            window.eventHub.on('showUploadArea', () => {
                 this.view.clearActive()
+            })
+            window.eventHub.on('showRemind', (data) => {
+                let newData = JSON.parse(JSON.stringify(data))
+                this.model.data.origin = newData.origin
+                this.view.remindActive()
             })
         },
     }

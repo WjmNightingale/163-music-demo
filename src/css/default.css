@@ -30,190 +30,302 @@ input {
     fill: currentColor;
     overflow: hidden;
 }
+
+.horizon {
+    height: 1px;
+    width: 100%;
+    background-color: #999;
+    margin-bottom: 6px;
+}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
-    /* overflow: hidden; */
+    padding: 26px 100px;
+    overflow: hidden;
 }
 
 /* layout */
 
 .app {
-    padding: 2px 2px;
-    border-radius: 5px;
-    /* width: 1200px;
-    height: 600px; */
+    border: 2px solid #999;
+    border-radius: 6px;
 }
 
-.topBar {
-    /* border: 1px solid red; */
-    padding: 10px 20px;
-    background: #c62f2f;
+/* 顶部状态栏 */
+
+.app>.topBar {
     display: flex;
     align-items: center;
-    /* border-radius: 5px; */
+    padding: 10px 20px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background: #c62f2f;
 }
 
-.topBar>svg {
+.app>.topBar>svg {
     width: 40px;
     height: 40px;
     margin-right: 20px;
     color: #fefcfc;
 }
 
-.topBar>span {
+.app>.topBar>span {
     font-size: 36px;
     color: #fefcfc;
 }
 
-.feature {
-    display: flex;
-    /* height: 100vh; */
-}
+/* 管理员功能区 */
 
-.feature>aside {
+.app>.feature {
     display: flex;
-    flex-direction: column;
-    width: 200px;
-    border: 1px solid red;
-    /* margin-right: 20px;  */
-}
-
-.feature>main {
-    flex-grow: 1;
 }
 
 /* aside */
 
-.newSong {
-    text-align: center;
-    padding: 10px;
-}
-
-.newSong.active {
-    background: #d4d4d4;
-}
-
-.songList-container {
-    flex-grow: 1;
+.app>.feature>aside {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border: 1px solid black;
+    width: 200px;
+    border-right: 2px solid #999;
 }
 
-.textSongsList {
-    /* text-align: center; */
+.app>.feature>aside>.songList-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app>.feature>aside>.songList-container>.textSongsList {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 26px;
-    /* background-color: red; */
 }
 
-.songsList {
+.app>.feature>aside>.songList-container>.songsList {
+    height: 360px;
+    overflow: scroll;
     text-align: left;
-    border-top: 1px solid #999;
-    overflow: auto;
 }
 
-.songsList>li {
-    border-bottom: 1px solid #ddd;
+.app>.feature>aside>.songList-container>.songsList>li {
+    margin-bottom: 2px;
     padding: 10px;
-    /* overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    color: red; */
-    /* margin-left: 10px;
-    margin-right: 10px; */
+    border-bottom: 1px solid #ddd;
+    color: gray;
 }
 
-.songsList>li.active {
+.app>.feature>aside>.songList-container>.songsList>li:hover {
+    border-left: 3px solid #c62f2f;
+    color: black;
+    cursor: pointer;
+}
+
+.app>.feature>aside>.songList-container>.songsList>li.active {
+    border-left: 3px solid #c62f2f;
+    background: #d9d9d9;
+    color: black;
+}
+
+.app>.feature>aside>.newSong {
+    margin-top: 4px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.app>.feature>aside>.newSong:hover,
+.app>.feature>aside>.newSong.active {
     background: #d4d4d4;
+}
+
+.app>.feature>aside>.newSong>svg {
+    margin-left: 6px;
+}
+
+.app>.feature>aside>.newSong:hover {
+    color: red;
 }
 
 /* main */
 
-.feature>main {
+.app>.feature>main {
     display: flex;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
     padding-left: 20px;
-    background: burlywood;
+    background: white;
 }
 
-.uploadArea {
-    display: flex;
+.app>.feature>main>.introduction {
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid orange;
-    display: none;
-    width: 400px;
-    height: 200px;
-    background: white;
-    /* background: white; */
+    padding: 10px 10px;
+    font-size: 24px;
 }
 
-.uploadArea.active {
+.app>.feature>main>.introduction.active {
+    display: flex;
+}
+
+.app>.feature>main>.introduction>.row {
+    margin: 4px 0;
+    color: gray;
+}
+
+.app>.feature>main>.introduction>.row>svg {
+    color: #c62f2f;
+}
+
+.app>.feature>main>.introduction>.row:first-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 28px;
+    color: black;
+}
+
+.app>.feature>main>.introduction>.row:first-child>svg {
+    width: 3em;
+    height: 3em;
+}
+
+.app>.feature>main>.uploadArea {
+    display: none;
+    position: relative;
+    background: white;
+}
+
+.app>.feature>main>.uploadArea.active {
     display: block;
 }
 
-.uploadArea>.draggable {
+.app>.feature>main>.uploadArea>.draggable {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 100px;
+    width: 600px;
+    height: 300px;
     border-radius: 4px;
-    border: 2px dashed orange;
+    border: 2px dashed gray;
     cursor: pointer;
     color: gray;
 }
 
-.uploadArea>.clickable {
+.app>.feature>main>.uploadArea>.clickable {
     margin-top: 20px;
-    font-size: 20px;
-    background: #c62f2f;
     padding: 6px 6px;
     border-radius: 5px;
     border: none;
+    font-size: 20px;
     color: #fefcfc;
     cursor: pointer;
+    background: #c62f2f;
+    outline: none;
 }
 
-.uploadArea>.draggable>.clickable {
-    cursor: pointer;
-}
-
-.feature>main>.editArea {
+.app>.feature>main>.uploadArea>.uploadStatus {
+    font-size: 20px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
     display: none;
-    width: 100%;
-    height: 100%;
+    z-index: 2;
+    text-indent: -9999em;
+    animation: load-effect 1s infinite linear;
 }
 
-.feature>main>.editArea.active {
+.app>.feature>main>.uploadArea>.uploadStatus.active {
     display: block;
 }
-.feature>main>.editArea>.remind {
+
+/* css3-loading动画 */
+
+@keyframes load-effect {
+    0% {
+        box-shadow: 0 -3em 0 .2em #c62f2f, /*上*/
+        2em -2em 0 0 #c62f2f, /*右上*/
+        3em 0 0 -.5em #c62f2f, /*右*/
+        2em 2em 0 -.5em #c62f2f, /*右下*/
+        0 3em 0 -.5em #c62f2f, /*下*/
+        -2em 2em 0 -.5em #c62f2f, /*左下*/
+        -3em 0 0 -.5em #c62f2f, /*左*/
+        -2em -2em 0 0 #c62f2f;
+        /*左上*/
+    }
+    12.5% {
+        box-shadow: 0 -3em 0 0 #c62f2f, 2em -2em 0 .2em #c62f2f, 3em 0 0 0 #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+    }
+    25% {
+        box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 0 #c62f2f, 3em 0 0 .2em #c62f2f, 2em 2em 0 0 #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+    }
+    37.5% {
+        box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 0 #c62f2f, 2em 2em 0 .2em #c62f2f, 0 3em 0 0 #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+    }
+    50% {
+        box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 0 #c62f2f, 0 3em 0 .2em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+    }
+    62.5% {
+        box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 0 #c62f2f, -2em 2em 0 .2em #c62f2f, -3em 0 0 0 #c62f2f, -2em -2em 0 -.5em #c62f2f;
+    }
+    75% {
+        box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 .2em #c62f2f, -2em -2em 0 0 #c62f2f;
+    }
+    87.5% {
+        box-shadow: 0 -3em 0 0 #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 0 #c62f2f, -2em -2em 0 .2em #c62f2f;
+    }
+    100% {
+        box-shadow: 0 -3em 0 .2em #c62f2f, 2em -2em 0 0 #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 0 #c62f2f;
+    }
+}
+
+/* 编辑功能区 */
+
+.app>.feature>main>.editArea {
     display: none;
+    width: 90%;
+    height: 80%;
+    position: relative;
 }
 
-form {
-    border: 1px solid red;
-    font-size: 14px;
+.app>.feature>main>.editArea.active {
+    display: block;
 }
 
-form>.row {
-    margin: 10px 0;
+.app>.feature>main>.editArea>.heading {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    padding-left: 26px;
+    font-size: 28px;
+}
+
+.app>.feature>main>.editArea>.heading>svg {
+    color: gray;
+}
+
+.app>.feature>main>.editArea>.horizon {
+    height: 2px;
+}
+
+.app>.feature>main>.editArea>form {
+    margin-top: 40px;
+    font-size: 18px;
+    color: gray;
+}
+
+.app>.feature>main>.editArea>form>.row {
+    margin: 20px 0;
     display: flex;
     align-items: center;
 }
 
-form>.row>label {
+.app>.feature>main>.editArea>form>.row>label {
     width: 4em;
     display: flex;
     align-items: center;
@@ -221,24 +333,123 @@ form>.row>label {
     margin-right: 5px;
 }
 
-form>.row.action {
+.app>.feature>main>.editArea>form>.row.action {
     margin-left: calc(4em + 5px);
 }
 
-form .row>input[type='text'] {
-    padding: 3px 8px;
+.app>.feature>main>.editArea>form>.row>input[type='text'] {
+    padding: 4px 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
     height: 30px;
+    outline: none;
+    color: gray;
 }
 
-form input[type='button'],
-form input[type='submit'],
-form button {
-    height: 30px;
+.app>.feature>main>.editArea>form>.row>input[type='text']:focus {
+    border: 1px solid #999;
+}
+
+.app>.feature>main>.editArea>form>.row>input[type='submit'] {
+    height: 40px;
+    width: 60px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 5px;
-    border: 1px solid #ddd;
-    background-color: whitesmoke;
+    border: none;
+    color: #fefcfc;
+    cursor: pointer;
+    background-color: #c62f2f;
+}
+
+.app>.feature>main>.editArea>form input[type='submit']:focus {
+    outline: none;
+}
+
+/* 弹出提醒框 */
+
+.app>.feature>main>.editArea>.remind {
+    display: none;
+    position: absolute;
+    width: 400px;
+    top: 20%;
+    left: 16%;
+    border-radius: 6px;
+    z-index: 2;
+}
+
+.app>.feature>main>.editArea>.remind.active {
+    display: block;
+}
+
+.app>.feature>main>.editArea>.remind>.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    font-size: 24px;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #c62f2f;
+}
+
+.app>.feature>main>.editArea>.remind>.heading>svg {
+    cursor: pointer;
+}
+
+.app>.feature>main>.editArea>.remind>.content {
+    background: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.app>.feature>main>.editArea>.remind>.content>.notify {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 30px 30px 30px;
+    font-size: 18px;
+}
+
+.app>.feature>main>.editArea>.remind>.content>.notify>svg {
+    color: red;
+    font-size: 26px;
+}
+
+.app>.feature>main>.editArea>.remind>.content>.action {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 66px;
+}
+
+.app>.feature>main>.editArea>.remind>.content>.action>button {
+    border: none;
+    margin-left: 16px;
+    padding: 4px 14px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    background: #c62f2f;
+}
+
+/* 弹出提醒框后的遮罩层 */
+
+.fade {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    z-index: 1;
+    opacity: .8;
+    filter: alpha(opacity=80);
+}
+
+.fade.active {
+    display: block;
 }

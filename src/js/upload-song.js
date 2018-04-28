@@ -1,7 +1,7 @@
 {
     // 本地歌曲上传七牛云生成外链
     let view = {
-        el: '.uploadArea',
+        el: '#uploadArea',
         find: function (selector) {
             return $(this.el).find(selector)[0]
         },
@@ -10,6 +10,9 @@
         },
         clearActive() {
             $(this.el).removeClass('active')
+        },
+        introductionClearActive() {
+            $('.feature > main > .introduction').removeClass('active')
         }
     }
     let model = {}
@@ -40,12 +43,14 @@
                             // 文件添加进队列后,处理相关的事情
                         });
                     },
-                    'BeforeUpload': function (up, file) {
+                    'BeforeUpload':  (up, file) => {
                         // 每个文件上传前,处理相关的事情
+                      uploadStatus.classList.add('active')
+                      $('.fade').addClass('active')
+                     
                     },
                     'UploadProgress': function (up, file) {
                         // 每个文件上传时,处理相关的事情
-                        uploadStatus.textContent = '上传中'
                     },
                     'FileUploaded': function (up, file, info) {
                         let domain = up.getOption('domain')
@@ -54,12 +59,13 @@
                         // 获取上传成功后的文件的Url
                         //  'http://' + domain + '/' + key
                         let sourceLink = `http://${domain}/${key}`
-                        uploadStatus.textContent = '上传完毕'
                         window.eventHub.emit('create', {
                             name: filename,
                             singer: '自定义',
                             url: sourceLink,
                         })
+                        uploadStatus.classList.remove('active')
+                        $('.fade').removeClass('active')
                     },
                     'Error': function (up, err, errTip) {
                         //上传出错时,处理相关的事情
@@ -74,6 +80,7 @@
             window.eventHub.on('showUploadArea', () => {
                 console.log('检测到新增歌曲被选择了')
                 this.view.active()
+                this.view.introductionClearActive()
             })
             window.eventHub.on('showForm',() => {
                 console.log('检测到编辑歌曲被选择了')

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>loading动画</title>
+    <style>
+        body {
+            background: #4ea980;
+            margin: 150px;
+        }
+
+        .uploadStatus {
+            font-size: 20px;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: relative;
+            text-indent: -9999em;
+            animation: load-effect2 1s infinite linear;
+        }
+
+        @keyframes load-effect1 {
+            0% {
+                /* 
+            -3em： 左移3em
+            2em：下移2em
+            0：模糊距离为0，也就是纯色
+            .5em：外扩 .5em
+            ##c62f2f：颜色--红
+            */
+                box-shadow: -3em 2em 0 .5em #c62f2f, 0 2em 0 0 #c62f2f, 3em 2em 0 -.5em #c62f2f;
+            }
+            25% {
+                box-shadow: -3em 2em 0 0 #c62f2f, 0 2em 0 -.5em #c62f2f, 3em 2em 0 0 #c62f2f;
+            }
+            50% {
+                box-shadow: -3em 2em 0 -.5em #c62f2f, 0 2em 0 0 #c62f2f, 3em 2em 0 .5em #c62f2f;
+            }
+            75% {
+                box-shadow: -3em 2em 0 0 #c62f2f, 0 2em 0 .5em #c62f2f, 3em 2em 0 0 #c62f2f;
+            }
+            100% {
+                box-shadow: -3em 2em 0 0.5em #c62f2f, 0 2em 0 0 #c62f2f, 3em 2em 0 -.5em #c62f2f;
+            }
+        }
+
+        @keyframes load-effect2 {
+            0% {
+                box-shadow: 0 -3em 0 .2em #c62f2f, /*上*/
+                2em -2em 0 0 #c62f2f, /*右上*/
+                3em 0 0 -.5em #c62f2f, /*右*/
+                2em 2em 0 -.5em #c62f2f, /*右下*/
+                0 3em 0 -.5em #c62f2f, /*下*/
+                -2em 2em 0 -.5em #c62f2f, /*左下*/
+                -3em 0 0 -.5em #c62f2f, /*左*/
+                -2em -2em 0 0 #c62f2f;
+                /*左上*/
+            }
+            12.5% {
+                box-shadow: 0 -3em 0 0 #c62f2f,
+                2em -2em 0 .2em #c62f2f,
+                3em 0 0 0 #c62f2f,
+                2em 2em 0 -.5em #c62f2f,
+                0 3em 0 -.5em #c62f2f,
+                -2em 2em 0 -.5em #c62f2f,
+                -3em 0 0 -.5em #c62f2f,
+                -2em -2em 0 -.5em #c62f2f;
+            }
+            25% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f,
+                2em -2em 0 0 #c62f2f,
+                3em 0 0 .2em #c62f2f,
+                2em 2em 0 0 #c62f2f,
+                0 3em 0 -.5em #c62f2f,
+                -2em 2em 0 -.5em #c62f2f,
+                -3em 0 0 -.5em #c62f2f,
+                -2em -2em 0 -.5em #c62f2f;
+            }
+            37.5% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f,
+                2em -2em 0 -.5em #c62f2f,
+                3em 0 0 0 #c62f2f,
+                2em 2em 0 .2em #c62f2f,
+                0 3em 0 0 #c62f2f,
+                -2em 2em 0 -.5em #c62f2f,
+                -3em 0 0 -.5em #c62f2f,
+                -2em -2em 0 -.5em #c62f2f;
+            }
+            50% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f,
+                2em -2em 0 -.5em #c62f2f,
+                3em 0 0 -.5em #c62f2f,
+                2em 2em 0 0 #c62f2f,
+                0 3em 0 .2em #c62f2f,
+                -2em 2em 0 0 #c62f2f,
+                -3em 0 0 -.5em #c62f2f,
+                -2em -2em 0 -.5em #c62f2f;
+            }
+            62.5% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f,
+                2em -2em 0 -.5em #c62f2f,
+                3em 0 0 -.5em #c62f2f,
+                2em 2em 0 -.5em #c62f2f,
+                0 3em 0 0 #c62f2f,
+                -2em 2em 0 .2em #c62f2f,
+                -3em 0 0 0 #c62f2f,
+                -2em -2em 0 -.5em #c62f2f;
+            }
+            75% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f,
+                2em -2em 0 -.5em #c62f2f,
+                3em 0 0 -.5em #c62f2f,
+                2em 2em 0 -.5em #c62f2f,
+                0 3em 0 -.5em #c62f2f,
+                -2em 2em 0 0 #c62f2f,
+                -3em 0 0 .2em #c62f2f,
+                -2em -2em 0 0 #c62f2f;
+            }
+            87.5% {
+                box-shadow: 0 -3em 0 0 #c62f2f,
+                2em -2em 0 -.5em #c62f2f,
+                3em 0 0 -.5em #c62f2f,
+                2em 2em 0 -.5em #c62f2f,
+                0 3em 0 -.5em #c62f2f,
+                -2em 2em 0 0 #c62f2f,
+                -3em 0 0 0 #c62f2f,
+                -2em -2em 0 .2em #c62f2f;
+            }
+            100% {
+                box-shadow: 0 -3em 0 .2em #c62f2f,
+                2em -2em 0 0 #c62f2f,
+                3em 0 0 -.5em #c62f2f,
+                2em 2em 0 -.5em #c62f2f,
+                0 3em 0 -.5em #c62f2f,
+                -2em 2em 0 -.5em #c62f2f,
+                -3em 0 0 -.5em #c62f2f,
+                -2em -2em 0 0 #c62f2f;
+            }
+        }
+
+        .loadRing1 {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            box-shadow: inset 0 0 0 15px #c62f2f;
+            border-radius: 50%;
+            text-indent: -9999em;
+        }
+
+        .loadRing1::before {
+            position: absolute;
+            content: '';
+            width: 100px;
+            height: 200px;
+            background: #4ea980;
+            /* 半圆 */
+            border-radius: 0 200px 200px 0;
+            left: 100px;
+            /* 原点从（0,0）移至圆心处（0,100），绕圆心旋转 */
+            transform-origin: 0 100px;
+            animation: load-effect3 2s infinite linear;
+        }
+
+        /*最上层（即::before之前）绘制透明白色圆环*/
+
+        .loadRing1::after {
+            position: absolute;
+            content: '';
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            left: 0;
+            box-shadow: inset 0 0 0 15px rgba(255, 255, 2555, .2)
+        }
+
+        /*动画：旋转360°*/
+
+        @keyframes load-effect3 {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+            }
+        }
+
+        .loadRing2 {
+            text-indent: -9999em;
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: #ffffff;
+
+            /*从左向右0~10%位置纯白，10%~50%纯白~透明*/
+            background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 50%);
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 20px rgba(255, 255, 255, .2);
+            -webkit-animation: load-effect4 2s infinite linear;
+            animation: load-effect4 2s infinite linear;
+        }
+
+        /*绘制纯白1/4圆*/
+
+        .loader::before {
+            position: absolute;
+            content: '';
+            width: 50%;
+            height: 50%;
+            background: #FFF;
+            border-radius: 100% 0 0 0;
+            left: 0;
+            top: 0;
+        }
+
+        /*绘制绿色背景内圆，挡住白色*/
+
+        .loader::after {
+            background: #4ea980;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        @keyframes load-effect4 {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="uploadStatus">loading</div>
+    <div class="loadRing1">loading</div>
+    <div class="loadRing2"></div>
+</body>
+
+</html>

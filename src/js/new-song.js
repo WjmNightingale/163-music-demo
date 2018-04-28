@@ -14,7 +14,12 @@
             $(this.el).removeClass('active')
         }
     }
-    let model = {}
+    let model = {
+        data: {
+            editAndSave: true,
+            origin: 'newSong'
+        }
+    }
     let controller = {
         init(view, model) {
             this.view = view
@@ -23,7 +28,12 @@
             this.bindEventHub()
             $(this.view.el).on('click',(e) => {
                 // 新增歌曲按钮被选中时发布一个showUploadArea事件
-                window.eventHub.emit('showUploadArea',{})
+                isEmit = this.model.data.editAndSave
+                if (isEmit) {
+                    window.eventHub.emit('showUploadArea',null)
+                } else {
+                    window.eventHub.emit('showRemind',this.model.data)
+                }
             })
         },
         bindEventHub() {
@@ -32,6 +42,12 @@
             })
             window.eventHub.on('showForm',() => {
                 this.view.cancelActive()
+            })
+            window.eventHub.on('songIsEdit',(data) => {
+                console.log('歌曲信息修改')
+                let newData = JSON.parse(JSON.stringify(data))
+                console.log(newData)
+                this.model.data = newData.editAndSave
             })
         }
     }

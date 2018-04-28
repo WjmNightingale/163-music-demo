@@ -6,7 +6,7 @@
             let {
                 songs
             } = data
-            
+
             let liList = songs.map((song) => $('<li></li>').text(song.name).attr('data-song-id', song.id))
             let $ul = $(this.el).find('ul')
             $ul.empty()
@@ -23,7 +23,9 @@
     }
     let model = {
         data: {
-            songs: []
+            songs: [],
+            editAndSave: true, // 默认值
+            origin: 'songList'
         },
         find() {
             let query = new AV.Query('Song')
@@ -56,17 +58,24 @@
         },
         bindEvents() {
             $(this.view.el).on('click', 'li', (e) => {
-                this.view.activeItem(e.currentTarget)
+                isEmit = this.model.data.editAndSave
                 let songId = e.currentTarget.getAttribute('data-song-id')
                 let data = null
-                let songs = JSON.parse(JSON.stringify(this.model.data.songs))
-                for (let i = 0; i < songs.length; i++) {
-                    if (songs[i].id === songId) {
-                        data = songs[i]
-                        break
+                if (isEmit) {
+                    this.view.activeItem(e.currentTarget)
+                    let songs = JSON.parse(JSON.stringify(this.model.data.songs))
+                    for (let i = 0; i < songs.length; i++) {
+                        if (songs[i].id === songId) {
+                            data = songs[i]
+                            break
+                        }
                     }
+                    window.eventHub.emit('showForm', data)
+                } else {
+                    window.eventHub.emit('showRemind', this.model.data)
                 }
-                window.eventHub.emit('showForm', data)
+
+
             })
         },
         bindEventHub() {
@@ -78,14 +87,14 @@
                 this.model.data.songs.push(newData)
                 this.view.render(this.model.data)
             })
-            window.eventHub.on('update',(data) => {
+            window.eventHub.on('update', (data) => {
                 // 深拷贝
                 console.log('监听 form表单 的 update 事件,准备显示新的歌曲信息')
                 let updatedData = JSON.parse(JSON.stringify(data))
                 console.log(updatedData)
                 for (let i = 0; i < this.model.data.songs.length; i++) {
                     if (this.model.data.songs[i].id === updatedData.id) {
-                        Object.assign(this.model.data.songs[i],updatedData)
+                        Object.assign(this.model.data.songs[i], updatedData)
                     }
                 }
                 // this.model.data.songs.push(updatedData)
@@ -94,6 +103,15 @@
             window.eventHub.on('showUploadArea', () => {
                 console.log('监听到了showUploadArea事件')
                 this.view.clearActive()
+            })
+            window.eventHub.on('songIsEdit', (data) => {
+                console.log('歌曲信息修改')
+                let newData = JSON.parse(JSON.stringify(data))
+                console.log('修改数据')
+                console.log(newData)
+                this.model.data.editAndSave = newData.editAndSave
+                console.log('修改后的model')
+                console.log(this.model.data)
             })
         }
     }
