@@ -39,14 +39,25 @@
     }
     let model = {
         data: {
+            id: '',
             name: '',
             singer: '',
             url: '',
+            origin: 'songList',
             editAndSave: true,
-            origin: ''
+        },
+        tmpData: {
+            id: '',
+            name: '',
+            singer: '',
+            url: '',
+            origin: 'songList',
+            editAndSave: true,
         },
         create(data) {
             // 存数据方法
+            console.log('这里是存储数据--')
+            console.log(data)
             let Song = AV.Object.extend('Song')
             let song = new Song()
             for (let key in data) {
@@ -75,6 +86,7 @@
             this.bindRemindCancel()
             this.bindSubmit()
             this.bindEventHub()
+            console.log(this.model.data.origin)
         },
         bindInputChange() {
             this.view.$el.on('change', 'input[type="text"]', (e) => {
@@ -87,24 +99,31 @@
         bindRemindConfirm() {
             console.log('.action > .confirm')
             $('.action > .confirm').on('click', (e) => {
-                console.log('点击确认')
                 // this.model.data.editAndSave = true
                 if (this.model.data.origin === 'newSong') {
                     // 修改信息未保存点击新建歌曲，弹出提示框后点击确定显示上传功能区
+                    console.log('新建歌曲事件')
+                    window.eventHub.emit('editAndSave', null)
                     window.eventHub.emit('showUploadArea', null)
                     this.view.remindClearActive()
                 } else if (this.model.data.origin === 'songList') {
                     // 修改信息未保存编辑其他歌曲，弹出提示框后点击确定显示另外一个要编辑的歌曲信息
-                    console.log('修改信息未保存编辑其他歌曲')
-                    this.model.data.editAndSave = true
-                    window.eventHub.emit('songIsEdit', this.model.data)
-                    window.eventHub.emit('showForm')
+                    // this.model.data.editAndSave = true
+                    Object.assign(this.model.data,this.model.tmpData)
+                    this.view.render(this.model.data)
                     this.view.remindClearActive()
+                    window.eventHub.emit('editAndSave', null)
+                    window.eventHub.emit('songIsEdit', this.model.data)
                 }
+                console.log('点击确认后的页面数据')
+                console.log(this.model.data)
             })
         },
         bindRemindCancel() {
             $('.action > .cancel').on('click', (e) => {
+                console.log('取消的时候页面数据')
+                console.log(this.model.data)
+                window.eventHub.emit('cancel',{data:this.model.data,tmpData:this.model.tmpData})
                 this.view.remindClearActive()
             })
         },
@@ -123,10 +142,13 @@
                         alert('不允许提交空值')
                         return
                     }
-
                 })
+                console.log('来源--', this.model.data['origin'])
+                data['origin'] = this.model.data['origin']
+                data['editAndSave'] = this.model.data['editAndSave']
                 console.log('表单提交')
                 console.log(data)
+
 
                 if (this.model.data.id) {
                     // 编辑歌曲
@@ -170,6 +192,10 @@
                         console.log(err)
                     })
                 }
+                $('.feature > main > .editArea > .successMessage').addClass('active')
+                setTimeout(() => {
+                    $('.feature > main > .editArea > .successMessage').removeClass('active')
+                },600)
                 window.eventHub.emit('songIsEdit', this.model.data)
                 console.log('结束')
             })
@@ -190,7 +216,7 @@
                 this.view.active()
                 // 将歌曲信息渲染到from表单
                 let newData = JSON.parse(JSON.stringify(data))
-                this.model.data = newData
+                Object.assign(this.model.data, newData)
                 this.view.render(this.model.data)
             })
             window.eventHub.on('songIsEdit', (data) => {
@@ -207,7 +233,9 @@
             })
             window.eventHub.on('showRemind', (data) => {
                 let newData = JSON.parse(JSON.stringify(data))
-                this.model.data.origin = newData.origin
+                console.log('接受到的数据--')
+                console.log(newData)
+                Object.assign(this.model.tmpData, newData)
                 this.view.remindActive()
             })
         },

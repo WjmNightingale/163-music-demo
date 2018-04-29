@@ -32,7 +32,7 @@ input {
 }
 
 .horizon {
-    height: 1px;
+    height: 2px;
     width: 100%;
     background-color: #999;
     margin-bottom: 6px;
@@ -103,8 +103,14 @@ body {
 
 .app>.feature>aside>.songList-container>.songsList {
     height: 360px;
-    overflow: scroll;
+    overflow: auto;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: flex-start; */
+    width: 100%;
+    padding: 0 2px;
 }
 
 .app>.feature>aside>.songList-container>.songsList>li {
@@ -131,19 +137,17 @@ body {
     padding: 10px;
     text-align: center;
     cursor: pointer;
+    border-top: 2px solid gray;
 }
 
 .app>.feature>aside>.newSong:hover,
 .app>.feature>aside>.newSong.active {
+    color: red;
     background: #d4d4d4;
 }
 
 .app>.feature>aside>.newSong>svg {
     margin-left: 6px;
-}
-
-.app>.feature>aside>.newSong:hover {
-    color: red;
 }
 
 /* main */
@@ -164,6 +168,7 @@ body {
     align-items: center;
     padding: 10px 10px;
     font-size: 24px;
+    /* border: 1px solid red; */
 }
 
 .app>.feature>main>.introduction.active {
@@ -185,6 +190,7 @@ body {
     align-items: center;
     font-size: 28px;
     color: black;
+    margin-bottom: 40px;
 }
 
 .app>.feature>main>.introduction>.row:first-child>svg {
@@ -366,7 +372,34 @@ body {
     outline: none;
 }
 
-/* 弹出提醒框 */
+/* 修改成功提醒框 */
+
+.app>.feature>main>.editArea>.successMessage {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 20%;
+    left: 14%;
+    background: #ddd;
+    opacity: 0.8;
+    font-size: 24px;
+    padding: 20px 30px;
+    border-radius: 6px;
+}
+
+.app>.feature>main>.editArea>.successMessage.active {
+    display: flex;
+}
+
+.app>.feature>main>.editArea>.successMessage>svg {
+    margin-bottom: 4px;
+    color: #c62f2f;
+    font-size: 40px;
+}
+
+/* 上传成功提醒框 */
 
 .app>.feature>main>.editArea>.remind {
     display: none;

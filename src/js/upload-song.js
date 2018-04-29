@@ -62,7 +62,7 @@
                         window.eventHub.emit('create', {
                             name: filename,
                             singer: '自定义',
-                            url: sourceLink,
+                            url: sourceLink
                         })
                         uploadStatus.classList.remove('active')
                         $('.fade').removeClass('active')
