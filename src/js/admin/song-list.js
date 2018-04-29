@@ -127,6 +127,7 @@
                         break
                     }
                 }
+                
                 console.log('修改后的model')
                 console.log(this.model.data)
             })
