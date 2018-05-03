@@ -103,7 +103,7 @@ section.topBar>a::after {
 }
 
 .tab-content {
-    margin-top: 105px;
+    margin-top: 126px;
 }
 
 .tab-content>li {
@@ -155,10 +155,18 @@ section.playlists>ol.songs>li img {
     width: 100%;
 }
 
-section.songs {}
+section.songs {
+    /* background: gray; */
+}
 
 section.songs>.list {
     margin-top: 18px;
+}
+
+section.songs>.list>li>.song {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 section.songs>.list>li>h3 {
@@ -199,7 +207,7 @@ section.songs>.list .icon-sq {
 section.art {
     padding-top: 38px;
     padding-bottom: 18px;
-    background: transparent url(//i.loli.net/2017/08/25/599f862b9c98d.png) no-repeat center;
+    background: transparent url(https://i.loli.net/2017/08/25/599f862b9c98d.png) no-repeat center;
     background-size: cover;
     text-align: center;
 }
