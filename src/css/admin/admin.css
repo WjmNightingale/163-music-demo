@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
 }
@@ -29,7 +29,7 @@ input {
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
-}
+} */
 
 .horizon {
     height: 2px;

@@ -17,7 +17,7 @@
                         </svg>
                     ${song.singer}
                     </p>
-                    <a class="playButton" href="${song.url}">
+                    <a class="playButton" href="./song.html?id=${song.id}">
                         <svg class="icon-play" aria-hidden="true">
                             <use xlink:href="#icon-iconset0481"></use>
                         </svg>
