@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/login-signup/login-signup.css">
+    <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="js/initializers/av.js"></script>
+    <title>云音乐后台管理</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-inner">
+            <h1>云音乐后台管理</h1>
+            <form action="" id="signUp" class="sign-up">
+                <div class="formRow">
+                    <span>昵称:</span>
+                    <input type="text" name="username" placeholder="请输入您的昵称" autofocus required>
+                </div>
+                <div class="horizon"></div>
+                <div class="formRow">
+                    <span>邮箱:</span>
+                    <input type="email" name="email" placeholder="请输入您的邮箱地址" required>
+                </div>
+                <div class="horizon"></div>
+                <div class="formRow">
+                        <span>密码:</span>
+                        <input type="password" name="password" placeholder="请输入您的密码" required>
+                    </div>
+                    <div class="horizon"></div>
+                <label for="formActions" class="formActions">
+                    <input id="formActions" type="submit" value="注册">
+                </label>
+            </form>
+            <div class="protocol">
+                <p>注册即代表你使用《云音乐协议》</p>
+                <a href="#">注册机构号</a>
+            </div>
+            <div class="change">
+                <span>已有账号？</span>
+                <a href="/src/login.html">去登陆</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/signup/signup.js"></script>
+</body>
+
+</html>

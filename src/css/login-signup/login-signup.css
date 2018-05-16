@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(/src/img/bg.png);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 6px 80px;
+    background-color: #fff;
+    height: 88vh;
+}
+
+.container-inner h1 {
+    color: #0084FF;
+    font-size: 36px;
+    text-align: center;
+}
+
+.container-inner>p {
+    margin-top: 34px;
+    text-align: center;
+    color: #0084FF;
+    font-size: 24px;
+}
+
+.container-inner .formRow {
+    margin-top: 32px;
+    margin-bottom: 2px;
+}
+
+.container-inner .formRow span {
+    font-size: 18px;
+    margin-right: 5px;
+    color: #8590a6;
+}
+
+.container-inner .formRow input {
+    border-style: none;
+    padding: 5px 5px;
+    /* background-color: #edf4fa; */
+}
+
+.container-inner .formRow input::-webkit-input-placeholder {
+    font-size: 16px;
+    color: #8590a6;
+}
+
+.container-inner .formRow input:focus {
+    outline: none;
+    color: black;
+}
+
+.container-inner .horizon {
+    height: 2px;
+    background-color: #ebebeb;
+}
+
+.container-inner .formActions {
+    padding: 5px 0px;
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+    background-color: #0084FF;
+}
+
+.container-inner .formActions input {
+    border-style: none;
+    background-color: #0084FF;
+    font-size: 20px;
+    color: white;
+}
+
+.container-inner .protocol {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.container-inner .protocol p {
+    font-size: 12px;
+    color: #8590a6;
+}
+
+.container-inner .protocol a {
+    font-size: 12px;
+    color: #3b6ca9;
+    text-decoration: none;
+}
+
+.container-inner .change {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #F6F6F6;
+    margin: 12px 0;
+    padding: 28px 0px;
+    /* align-items: center; */
+}
+
+.container-inner .change span {
+    color: black;
+}
+.container-inner .change a {
+    color: #0084FF;
+    text-decoration: none;
+}
