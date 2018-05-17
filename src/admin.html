@@ -85,35 +85,40 @@
                     </div>
                     <div class="horizon"></div>
                     <form>
-                        <div class="row">
-                            <label for="">歌名:
-                            </label>
-                            <input name="name" type="text" value="name" required>
+                        <div class="left">
+                            <div class="row">
+                                <label for="">歌名:
+                                </label>
+                                <input name="name" type="text" value="name" required>
+                            </div>
+                            <div class="row">
+                                <label for="">歌手:
+                                </label>
+                                <input name="singer" type="text" value="singer" required>
+                            </div>
+                            <div class="row">
+                                <label for="">外链:
+                                </label>
+                                <input name="url" type="text" value="url" required>
+                            </div>
+                            <div class="row">
+                                <label for="cover" class="upload">封面
+                                </label>
+                                <input id="cover" name="cover" type="file" value="cover">
+                            </div>
+                            <div class="row action">
+                                <input type="submit" value="保存">
+                            </div>
                         </div>
-                        <div class="row">
-                            <label for="">歌手:
-                            </label>
-                            <input name="singer" type="text" value="singer" required>
-                        </div>
-                        <div class="row">
-                            <label for="">封面:
-                            </label>
-                            <input name="singer" type="file" value="cover" required>
-                        </div>
-                        <div class="row">
-                            <label for="">外链:
-                            </label>
-                            <input name="url" type="text" value="url" required>
-                        </div>
-                        <div class="row action">
-                            <input type="submit" value="保存">
+                        <div class="right">
+                            <img id="coverImg" class="active" src="#" width=200 height=240 alt="歌曲封面图">
                         </div>
                     </form>
                     <div class="successMessage">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-success"></use>
                         </svg>
-                        <span>修改成功</span>
+                        <span>保存成功</span>
                     </div>
                     <div class="remind">
                         <div class="heading">

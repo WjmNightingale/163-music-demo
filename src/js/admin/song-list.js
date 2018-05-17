@@ -29,6 +29,7 @@
         },
         find() {
             let query = new AV.Query('Song')
+            query.addDescending('createdAt')
             return query.find().then((songs) => {
                 this.data.songs = songs.map((song) => {
                     return {
@@ -59,9 +60,9 @@
         bindEvents() {
             $(this.view.el).on('click', 'li', (e) => {
                 let result = this.model.data.songs.map(item => item.editAndSave)
+                console.log('是否有修改过未保存的')
                 console.log(result.indexOf(false) > -1)
                 result =  result.indexOf(false) > -1
-                console.log('是否有修改过未保存的')
                 console.log('这是songList模块的点击事件--歌曲被选中')
                 let songId = e.currentTarget.getAttribute('data-song-id')
                 let data = null
@@ -95,7 +96,7 @@
                 console.log('监听 form表单 的 save 事件,准备显示新的歌曲信息')
                 let newData = JSON.parse(JSON.stringify(data))
                 console.log(newData)
-                this.model.data.songs.push(newData)
+                this.model.data.songs.unshift(newData)
                 this.view.render(this.model.data)
             })
             window.eventHub.on('update', (data) => {

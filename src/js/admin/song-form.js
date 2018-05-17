@@ -6,13 +6,29 @@
             this.$el = $(this.el)
         },
         render(data = {}) {
-            let placeholders = 'name singer url'.split(' ')
+            console.log('歌曲信息详情页开始渲染--')
+            console.log(data)
+            let placeholders = 'name singer url cover'.split(' ')
             placeholders.map((string) => {
-                $(this.el).find(`input[value=${string}]`).val(data[string] || '')
+                if (string === 'cover') {
+                    console.log('歌曲信息详情页面--歌曲封面信息--')
+                    console.log(data[string])
+                    let imgUrl
+                    if (data[string] === null) {
+                        imgUrl = '#'
+                    } else {
+                        imgUrl = data[string].url
+                    }
+                    $(this.el).find('img#coverImg').attr('src', imgUrl)
+                } else {
+                    $(this.el).find(`input[value=${string}]`).val(data[string] || '')
+                }
             })
             if (data.id) {
                 $(this.el).find('.heading > span').text('编辑歌曲')
+                $(this.el).find('img#coverImg').addClass('active')
             } else {
+                $(this.el).find('img#coverImg').removeClass('active')
                 $(this.el).find('.heading > span').text('新建歌曲')
             }
         },
@@ -45,6 +61,7 @@
             url: '',
             origin: 'songList',
             editAndSave: true,
+            cover: null
         },
         tmpData: {
             id: '',
@@ -53,6 +70,7 @@
             url: '',
             origin: 'songList',
             editAndSave: true,
+            cover: null
         },
         create(data) {
             // 存数据方法
@@ -87,6 +105,10 @@
             this.bindSubmit()
             this.bindEventHub()
             console.log(this.model.data.origin)
+            console.log('页面数据')
+            console.log(this.model.data)
+            console.log('页面临时数据')
+            console.log(this.model.tmpData)
         },
         bindInputChange() {
             this.view.$el.on('change', 'input[type="text"]', (e) => {
@@ -109,7 +131,7 @@
                 } else if (this.model.data.origin === 'songList') {
                     // 修改信息未保存编辑其他歌曲，弹出提示框后点击确定显示另外一个要编辑的歌曲信息
                     // this.model.data.editAndSave = true
-                    Object.assign(this.model.data,this.model.tmpData)
+                    Object.assign(this.model.data, this.model.tmpData)
                     this.view.render(this.model.data)
                     this.view.remindClearActive()
                     window.eventHub.emit('editAndSave', null)
@@ -123,7 +145,10 @@
             $('.action > .cancel').on('click', (e) => {
                 console.log('取消的时候页面数据')
                 console.log(this.model.data)
-                window.eventHub.emit('cancel',{data:this.model.data,tmpData:this.model.tmpData})
+                window.eventHub.emit('cancel', {
+                    data: this.model.data,
+                    tmpData: this.model.tmpData
+                })
                 this.view.remindClearActive()
             })
         },
@@ -132,21 +157,37 @@
                 e.preventDefault()
                 console.log('这里是保存按钮')
                 this.model.data.editAndSave = true
-                let need = 'name singer url'.split(' ')
+                let need = 'name singer url cover'.split(' ')
                 let data = {}
                 need.map((string) => {
-                    let value = this.view.$el.find(`[name=${string}]`).val()
-                    if (value.trim().length > 0) {
-                        data[string] = value
+                    if (string === 'cover') {
+                        // file
+                        let file = this.view.$el.find(`[name=${string}]`)[0].files[0]
+                        console.log(file)
+                        if (file) {
+                            // 更新图片
+                            let fileName = file.name
+                            let avFile = new AV.File(fileName, file)
+                            data[string] = avFile
+                        } else {
+                            // 不更新图片
+                            delete data[string]
+                        }
                     } else {
-                        alert('不允许提交空值')
-                        return
+                        // string
+                        let value = this.view.$el.find(`[name=${string}]`).val()
+                        if (value.trim().length > 0) {
+                            data[string] = value
+                        } else {
+                            alert('不允许提交空值')
+                            return
+                        }
                     }
                 })
                 console.log('来源--', this.model.data['origin'])
                 data['origin'] = this.model.data['origin']
                 data['editAndSave'] = this.model.data['editAndSave']
-                console.log('表单提交')
+                console.log('表单提交此时的数据--')
                 console.log(data)
 
 
@@ -165,6 +206,14 @@
                             id,
                             ...attributes
                         })
+
+
+
+                        console.log('修改页面后的数据')
+                        console.log(this.model.data)
+                        console.log('修改图片src')
+                        console.log(this.model.data.cover.url())
+                        this.view.$el.find('img#coverImg').attr('src', this.model.data.cover.url())
                         window.eventHub.emit('update', this.model.data)
                     })
                 } else {
@@ -183,11 +232,14 @@
                             ...attributes
                         })
                         console.log('2')
-                        // 清空from表单
-                        this.view.reset()
-                        // 发布一个save事件
-                        console.log()
+                        // 隐藏from表单
+                        // 发布一个showUploadArea事件
+                        console.log('发布一个save事件携带的数据---')
+                        console.log(this.model.data)
                         window.eventHub.emit('save', this.model.data)
+                        console.log('发布一个showUploadArea事件---')
+                        window.eventHub.emit('showUploadArea')
+                        this.view.clearActive()
                     }, (err) => {
                         console.log(err)
                     })
@@ -195,7 +247,9 @@
                 $('.feature > main > .editArea > .successMessage').addClass('active')
                 setTimeout(() => {
                     $('.feature > main > .editArea > .successMessage').removeClass('active')
-                },600)
+                }, 1000)
+                console.log('修改页面后的数据')
+                console.log(this.model.data)
                 window.eventHub.emit('songIsEdit', this.model.data)
                 console.log('结束')
             })
@@ -204,19 +258,34 @@
             window.eventHub.on('showForm', (data) => {
                 this.view.introductionClearActive()
                 this.view.active()
-                console.log('从歌曲列表模块传递过来的信息')
+                console.log('从歌曲列表模块传递过来的歌曲信息---')
                 console.log(data)
                 this.model.data = data
                 this.view.render(this.model.data)
                 // songId = data.id
             })
             window.eventHub.on('create', (data) => {
+
                 console.log('新增歌曲上传完毕，七牛云返回的信息')
                 console.log(data)
+                console.log('此时歌曲详情页的数据--')
+                console.log(this.model.data)
+                console.log('此时歌曲详情页的临时数据--')
+                console.log(this.model.tmpData)
                 this.view.active()
                 // 将歌曲信息渲染到from表单
-                let newData = JSON.parse(JSON.stringify(data))
+                let newData = {
+                    id: '',
+                    name: '',
+                    singer: '',
+                    url: '',
+                    origin: 'songList',
+                    editAndSave: true,
+                    cover: null
+                }
+                Object.assign(newData, data)
                 Object.assign(this.model.data, newData)
+                console.log('接受到七牛云返回的数据的页面数据---')
                 this.view.render(this.model.data)
             })
             window.eventHub.on('songIsEdit', (data) => {
