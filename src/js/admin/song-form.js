@@ -111,7 +111,7 @@
             console.log(this.model.tmpData)
         },
         bindInputChange() {
-            this.view.$el.on('change', 'input[type="text"]', (e) => {
+            this.view.$el.on('change', 'input', (e) => {
                 // 歌曲信息发生改变了
                 console.log('歌曲信息发生改变了')
                 this.model.data.editAndSave = false
@@ -155,6 +155,10 @@
         bindSubmit() {
             this.view.$el.on('submit', 'form', (e) => {
                 e.preventDefault()
+                if (this.model.data.editAndSave) {
+                    window.alert('您未做任何修改')
+                    return
+                }
                 console.log('这里是保存按钮')
                 this.model.data.editAndSave = true
                 let need = 'name singer url cover'.split(' ')
@@ -166,11 +170,13 @@
                         console.log(file)
                         if (file) {
                             // 更新图片
+                            console.log('更新图片')
                             let fileName = file.name
                             let avFile = new AV.File(fileName, file)
                             data[string] = avFile
                         } else {
                             // 不更新图片
+                            console.log('不更新图片')
                             delete data[string]
                         }
                     } else {
@@ -206,14 +212,12 @@
                             id,
                             ...attributes
                         })
-
-
-
                         console.log('修改页面后的数据')
                         console.log(this.model.data)
-                        console.log('修改图片src')
-                        console.log(this.model.data.cover.url())
-                        this.view.$el.find('img#coverImg').attr('src', this.model.data.cover.url())
+                        if (typeof this.model.data.cover.url === 'function') {
+                            console.log('说明修改了图片')
+                            this.view.$el.find('img#coverImg').attr('src', this.model.data.cover.url())
+                        }
                         window.eventHub.emit('update', this.model.data)
                     })
                 } else {
@@ -244,14 +248,17 @@
                         console.log(err)
                     })
                 }
-                $('.feature > main > .editArea > .successMessage').addClass('active')
-                setTimeout(() => {
-                    $('.feature > main > .editArea > .successMessage').removeClass('active')
-                }, 1000)
+                console.log('cover元素--')
+                console.log(this.view.$el.find(`[name=cover]`)[0])
+                this.view.$el.find(`[name=cover]`)[0].value = ''
                 console.log('修改页面后的数据')
                 console.log(this.model.data)
                 window.eventHub.emit('songIsEdit', this.model.data)
                 console.log('结束')
+                $('.feature > main > .editArea > .successMessage').addClass('active')
+                setTimeout(() => {
+                    $('.feature > main > .editArea > .successMessage').removeClass('active')
+                }, 1000)
             })
         },
         bindEventHub() {
@@ -280,7 +287,7 @@
                     singer: '',
                     url: '',
                     origin: 'songList',
-                    editAndSave: true,
+                    editAndSave: false,
                     cover: null
                 }
                 Object.assign(newData, data)

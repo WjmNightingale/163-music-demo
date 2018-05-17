@@ -21,24 +21,38 @@ body {
 
 .app>.topBar {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     padding: 10px 20px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     background: #c62f2f;
 }
 
-.app>.topBar>svg {
+.app>.topBar svg {
     width: 40px;
     height: 40px;
-    margin-right: 20px;
     color: #fefcfc;
 }
 
-.app>.topBar>span {
+.app>.topBar>.left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.app>.topBar>.left>svg {
+    margin-right: 20px;
+}
+
+.app>.topBar>.left>span {
     font-size: 36px;
     color: #fefcfc;
 }
+.app>.topBar>.right>svg {
+    cursor: pointer;
+} 
 
 /* 管理员功能区 */
 
@@ -272,7 +286,6 @@ body {
 }
 
 .app>.feature>main>.editArea>.heading {
-    margin-top: 10px;
     margin-bottom: 6px;
     padding-left: 26px;
     font-size: 28px;
@@ -287,15 +300,25 @@ body {
 }
 
 .app>.feature>main>.editArea>form {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 18px;
     color: gray;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* border: 1px solid green; */
 }
 
-.app>.feature>main>.editArea>form>.left {}
+.app>.feature>main>.editArea>form>.left .row {
+    /* border: 1px solid black; */
+}
+
+.app>.feature>main>.editArea>form>.left .size {
+    display: block;
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+}
 
 .app>.feature>main>.editArea>form>.right {
     padding: 4px;
@@ -305,16 +328,21 @@ body {
 }
 .app>.feature>main>.editArea>form>.right>img {
     vertical-align: middle;
-    visibility: hidden;
+    display: none;
+    border-radius: 4px;
 }
 .app>.feature>main>.editArea>form>.right>img.active {
-    visibility: visible
+    display: block;
 }
 
 .app>.feature>main>.editArea>form .row {
     margin: 20px 0;
     display: flex;
     align-items: center;
+}
+
+.app>.feature>main>.editArea>form .row:nth-child(4) {
+    margin-bottom: 4px;
 }
 
 .app>.feature>main>.editArea>form .row>label {
