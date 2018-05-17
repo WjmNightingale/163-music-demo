@@ -1,4 +1,13 @@
 {
+    // 获取当前用户
+    let currentUser = AV.User.current()
+    console.log(currentUser)
+    if (currentUser) {
+        $('div.app').addClass('active')
+    } else {
+        window.location.href = '/src/login.html'
+        window.alert('请先登陆')
+    }
     // 歌曲信息保存至 leanCloud
     let view = {
         el: '.feature > main > .editArea',
@@ -81,6 +90,7 @@
             for (let key in data) {
                 song.set(key, data[key])
             }
+            song.set('owner', currentUser)
             return song.save()
         },
         update(id, data) {
@@ -99,6 +109,7 @@
             this.model = model
             this.view.init()
             this.view.render(this.model.data)
+            this.bindLogout()
             this.bindInputChange()
             this.bindRemindConfirm()
             this.bindRemindCancel()
@@ -109,6 +120,14 @@
             console.log(this.model.data)
             console.log('页面临时数据')
             console.log(this.model.tmpData)
+        },
+        bindLogout() {
+            $('#logout').on('click', (e) => {
+                AV.User.logOut()
+                $('div.app').removeClass('active')
+                window.location.href = '/src/login.html'
+                window.alert('即将退出登录状态')
+            })
         },
         bindInputChange() {
             this.view.$el.on('change', 'input', (e) => {

@@ -7,10 +7,11 @@
     }
     let model = {
         createUser(username, password, email) {
+            // 注册以及登陆
             let user = new AV.User()
             user.setUsername(username)
-            user.setPassword(password)
             user.setEmail(email)
+            user.setPassword(password)
             return user.signUp()
         }
     }
@@ -19,7 +20,6 @@
             this.view = view
             this.model = model
             this.view.init()
-            console.log(this.view.$el)
             this.bindSubmit()
         },
         bindSubmit() {

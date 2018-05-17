@@ -7,7 +7,7 @@
 
 body {
     padding: 26px 100px;
-    overflow: hidden;
+    overflow: hidden;   
 }
 
 /* layout */
@@ -15,6 +15,10 @@ body {
 .app {
     border: 2px solid #999;
     border-radius: 6px;
+    display: none;
+}
+.app.active {
+    display: block;
 }
 
 /* 顶部状态栏 */
