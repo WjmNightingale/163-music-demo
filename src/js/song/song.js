@@ -11,7 +11,16 @@
             console.log('渲染函数--')
             console.log(data)
             // $(this.el).html(this.template.replace('{{url}}',data.url))
-            $('audio#songSource').attr('url',data.url)
+            // 渲染播放背景
+            $('.app .background-cover').css({
+                background: `url(${data.cover.attributes.url}) center / cover no-repeat transparent`,
+            })
+            // 渲染封面图
+            $('.app .disc-container .disc .cover').css({
+                background: `url(${data.cover.attributes.url}) center / 44.5vw 44.5vw no-repeat transparent`,
+            })
+            // 获取歌曲信息
+            $('audio#songSource').attr('src', data.url)
         },
         play() {
             let audio = $(this.el).find('audio')[0]
@@ -67,33 +76,34 @@
             this.bindEvents()
         },
         bindEvents() {
-            console.log('暂停播放函数')
-            console.log($('svg#play').on())
-            console.log(this.view.$el.find('svg#play').on())
-            this.view.$el.find('svg#play').on('click',(e) => {
-                console.log( e.currentTarget)
-               console.log($( e.currentTarget))
-               $(e.currentTarget).removeClass('active')
-               $(e.currentTarget).siblings().addClass('active')
-               this.view.$el.find('img#pointer').css('animation-play-state','running')
-               this.view.$el.find('div#cover').css('animation-play-state','running')
-               this.view.play()
+            console.log('暂停播放函数')    
+            this.view.$el.find('svg#back').on('click',(e) => {
+                window.location.href = '/src/index.html'
             })
-            this.view.$el.find('svg#pause').on('click',(e) => {
-                console.log( e.currentTarget)
-               console.log($( e.currentTarget))
-               $(e.currentTarget).removeClass('active')
-               $(e.currentTarget).siblings().addClass('active')
-               this.view.$el.find('img#pointer').css('animation-play-state','paused')
-               this.view.$el.find('div#cover').css('animation-play-state','paused')
-               this.view.pause()
+            this.view.$el.find('svg#play').on('click', (e) => {
+                console.log(e.currentTarget)
+                console.log($(e.currentTarget))
+                $(e.currentTarget).removeClass('active')
+                $(e.currentTarget).siblings().addClass('active')
+                this.view.$el.find('img#pointer').css('animation-play-state', 'running')
+                this.view.$el.find('div#cover').css('animation-play-state', 'running')
+                this.view.play()
             })
-            this.view.$el.find('audio#songSource').on('ended',(e) => {
+            this.view.$el.find('svg#pause').on('click', (e) => {
+                console.log(e.currentTarget)
+                console.log($(e.currentTarget))
+                $(e.currentTarget).removeClass('active')
+                $(e.currentTarget).siblings().addClass('active')
+                this.view.$el.find('img#pointer').css('animation-play-state', 'paused')
+                this.view.$el.find('div#cover').css('animation-play-state', 'paused')
+                this.view.pause()
+            })
+            this.view.$el.find('audio#songSource').on('ended', (e) => {
                 console.log('播放完毕')
                 this.view.$el.find('svg#play').addClass('active')
                 this.view.$el.find('svg#pause').removeClass('active')
-                this.view.$el.find('div#pointer').css('animation-play-state','paused')
-                this.view.$el.find('div#cover').css('animation-play-state','paused')
+                this.view.$el.find('div#pointer').css('animation-play-state', 'paused')
+                this.view.$el.find('div#cover').css('animation-play-state', 'paused')
             })
         },
         getSongId() {

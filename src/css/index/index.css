@@ -194,8 +194,8 @@ section.songs>.list .playButton {
 }
 
 section.songs>.list .icon-play {
-    width: 22px;
-    height: 22px;
+    width: 10vw;
+    height: 10vw;
     vertical-align: middle;
     fill: #AAA;
 }
