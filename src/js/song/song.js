@@ -2,9 +2,7 @@
     let view = {
         el: '#app',
         template: `
-        <audio src={{url}}></audio>
-        <div class="playButton">点击播放</div>
-        <div class="pauseButton">点击暂停</div>
+        
         `,
         init() {
             this.$el = $(this.el)
@@ -12,7 +10,8 @@
         render(data) {
             console.log('渲染函数--')
             console.log(data)
-            $(this.el).html(this.template.replace('{{url}}',data.url))
+            // $(this.el).html(this.template.replace('{{url}}',data.url))
+            $('audio#songSource').attr('url',data.url)
         },
         play() {
             let audio = $(this.el).find('audio')[0]
@@ -49,6 +48,7 @@
         init(view, model) {
             this.view = view
             this.model = model
+            this.view.init()
             let id = this.getSongId()
             console.log('id---', id)
             this.model.getSongById(id).then((data) => {
@@ -67,11 +67,33 @@
             this.bindEvents()
         },
         bindEvents() {
-            $(this.view.el).on('click','.playButton',(e) => {
-                this.view.play()
+            console.log('暂停播放函数')
+            console.log($('svg#play').on())
+            console.log(this.view.$el.find('svg#play').on())
+            this.view.$el.find('svg#play').on('click',(e) => {
+                console.log( e.currentTarget)
+               console.log($( e.currentTarget))
+               $(e.currentTarget).removeClass('active')
+               $(e.currentTarget).siblings().addClass('active')
+               this.view.$el.find('img#pointer').css('animation-play-state','running')
+               this.view.$el.find('div#cover').css('animation-play-state','running')
+               this.view.play()
             })
-            $(this.view.el).on('click','.pauseButton',(e) => {
-                this.view.pause()
+            this.view.$el.find('svg#pause').on('click',(e) => {
+                console.log( e.currentTarget)
+               console.log($( e.currentTarget))
+               $(e.currentTarget).removeClass('active')
+               $(e.currentTarget).siblings().addClass('active')
+               this.view.$el.find('img#pointer').css('animation-play-state','paused')
+               this.view.$el.find('div#cover').css('animation-play-state','paused')
+               this.view.pause()
+            })
+            this.view.$el.find('audio#songSource').on('ended',(e) => {
+                console.log('播放完毕')
+                this.view.$el.find('svg#play').addClass('active')
+                this.view.$el.find('svg#pause').removeClass('active')
+                this.view.$el.find('div#pointer').css('animation-play-state','paused')
+                this.view.$el.find('div#cover').css('animation-play-state','paused')
             })
         },
         getSongId() {
