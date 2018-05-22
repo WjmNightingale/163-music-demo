@@ -24,6 +24,12 @@
             // 获取歌曲名字以及歌手名字
             $('.app .top .song-description .song-name').text(data.name)
             $('.app .top .song-description .song-singer').text(data.singer)
+
+            // 获取歌词  正则表达式来过滤时间轴/\[([\d:]+)\](.+)/
+
+            let regex = /\[([\d:.]+)\](.+)/
+
+            // audio.ontimeupdate  audio.currentTime
         },
         play() {
             let audio = $(this.el).find('audio')[0]

@@ -50,7 +50,7 @@
             </aside>
 
             <main>
-                <div class="introduction active">
+                <div class="introduction">
                     <div class="row">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-huanyingye"></use>
@@ -83,44 +83,51 @@
                     <div id="uploadStatus" class="uploadStatus">loading...</div>
                 </div>
                 <!-- 编辑功能区视图 -->
-                <div class="editArea">
+                <div class="editArea active">
                     <div class="heading">
-                        <span>新建歌曲</span>
+                        <span class="new-or-edit">新建歌曲</span>
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-edit02"></use>
                         </svg>
                     </div>
                     <div class="horizon"></div>
                     <form>
-                        <div class="left">
-                            <div class="row">
-                                <label for="">歌名:
-                                </label>
-                                <input name="name" type="text" value="name" required>
+                        <div class="form-content">
+                            <div class="left">
+                                <div class="row">
+                                    <label for="">歌名:
+                                    </label>
+                                    <input name="name" type="text" value="name" required>
+                                </div>
+                                <div class="row">
+                                    <label for="">歌手:
+                                    </label>
+                                    <input name="singer" type="text" value="singer" required>
+                                </div>
+                                <div class="row">
+                                    <label for="">外链:
+                                    </label>
+                                    <input name="url" type="text" value="url" required>
+                                </div>
+                                <div class="row">
+                                    <div class="row-inner">
+                                        <span >封面:</span>
+                                        <label for="cover" class="upload">点击上传封面
+                                        </label>
+                                        <input id="cover" name="cover" type="file" value="cover">
+                                    </div>
+                                    <span class="size">(尺寸建议240*240) </span>
+                                    <img id="coverImg" class="active" src="#" width=120 height=120 alt="歌曲封面图">
+                                </div>
                             </div>
-                            <div class="row">
-                                <label for="">歌手:
+                            <div class="right">
+                                <label for="">歌词(推荐.lyric格式)
                                 </label>
-                                <input name="singer" type="text" value="singer" required>
-                            </div>
-                            <div class="row">
-                                <label for="">外链:
-                                </label>
-                                <input name="url" type="text" value="url" required>
-                            </div>
-                            <div class="row">
-                                <label for="cover" class="upload">封面:
-                                </label>
-                                <input id="cover" name="cover" type="file" value="cover">
-                            </div>
-                            <span class="size">(尺寸建议240*240)
-                                </span>
-                            <div class="row action">
-                                <input type="submit" value="保存">
+                                <textarea cols="50" rows="20" name="lyric" required></textarea>
                             </div>
                         </div>
-                        <div class="right">
-                            <img id="coverImg" class="active" src="#" width=260 height=260 alt="歌曲封面图">
+                        <div class="form-submit">
+                            <input type="submit" value="保存">
                         </div>
                     </form>
                     <div class="successMessage">
@@ -155,7 +162,7 @@
     </div>
     <div id="fade" class="fade"></div>
 
-    <script src="js/initializers/av.js"></script>   
+    <script src="js/initializers/av.js"></script>
     <script src="js/event-hub.js"></script>
     <script src="js/admin/new-song.js"></script>
     <script src="js/admin/song-form.js"></script>
