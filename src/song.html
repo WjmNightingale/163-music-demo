@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>我的云音乐</title>
-    <script src="//at.alicdn.com/t/font_643967_sxk2n1uyqa8dj9k9.js"></script>
+    <script src="//at.alicdn.com/t/font_643967_ej9ahk5l8m5nrk9.js"></script>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/song/song.css">
 </head>
@@ -15,34 +15,43 @@
     <div id="app" class="app">
         <div class="background-cover"></div>
         <audio id="songSource" src="http://p7fonu2ax.bkt.clouddn.com/ocha%20-%20melon.mp3"></audio>
-        <svg id="back" class="icon icon-back">
-                <use xlink:href="#icon-back"></use>
-            </svg>
-        <div class="disc-container">
-            <img id="pointer" class="pointer" src="//s3.music.126.net/m/s/img/needle-ip6.png?be4ebbeb6befadfcae75ce174e7db862" alt="唱碟1">
-            <div class="disc">
-                <div class="ring">
-                    <div class="light">
-                        <div id="cover" class="cover">
-                            <div class="icon-wrapper">
-                                <svg id="play" class="icon icon-play active">
-                                    <use xlink:href="#icon-iconset0481"></use>
-                                </svg>
-                                <svg id="pause" class="icon icon-pause">
-                                    <use xlink:href="#icon-bofang"></use>
-                                </svg>
+        <div class="container">
+            <div class="top">
+                <svg id="back" class="icon icon-back">
+                    <use xlink:href="#icon-back"></use>
+                </svg>
+                <div class="song-description">
+                    <span class="song-name">我是很长很长的歌曲名字</span>
+                    <span class="song-singer">我是短的歌手名字</span>
+                </div>
+                <svg id="share" class="icon icon-share">
+                    <use xlink:href="#icon-fenxiang1"></use>
+                </svg>
+            </div>
+            <div class="disc-container">
+                <img id="pointer" class="pointer" src="//s3.music.126.net/m/s/img/needle-ip6.png?be4ebbeb6befadfcae75ce174e7db862" alt="唱碟1">
+                <div class="disc">
+                    <div class="ring">
+                        <div class="light">
+                            <div id="cover" class="cover">
+                                <div class="icon-wrapper">
+                                    <svg id="play" class="icon icon-play active">
+                                        <use xlink:href="#icon-iconset0481"></use>
+                                    </svg>
+                                    <svg id="pause" class="icon icon-pause">
+                                        <use xlink:href="#icon-bofang"></use>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="lyric">
+                    <div class="lines">歌词部分</div>
+                </div>
             </div>
         </div>
-        <div class="song-description">
-            <h1>歌曲名字</h1>
-            <div class="lyric">
-                <div class="lines">歌词部分</div>
-            </div>
-        </div>
+
         <div class="links">
             <a href="#">打开</a>
             <a href="#" class="main">下载</a>

@@ -16,36 +16,66 @@
     height: 100%;
     background: transparent url(/src/img/test-bg.jpg) no-repeat center;
     background-size: cover;
-    filter: blur(5px);
+    filter: blur(5px) brightness(50%);
     z-index: -99;
 }
-.app .icon-back {
+
+.app .top {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.app .top .icon-back {
     width: 8vw;
     height: 8vw;
-    fill:#c62f2f;
-    position: fixed;
-    left: 2vw;
-    top: 4vw;
+    fill: #ddd;
+}
+.app .top .song-description {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+.app .top .song-description .song-name {
+    color: #ddd;
+    font-size: 16px;
+}
+.app .top .icon-share {
+    width: 8vw;
+    height: 8vw;
+    fill: #ddd;
+}
+.app .top .song-description .song-singer {
+    color: #ddd;
+    font-size: 12px;
 }
 
 .app .disc-container {
-    /* border: 1px solid red; */
+    border-top: 2px solid gray;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
+    overflow: hidden;
 }
 
 .app .disc-container .pointer {
+    /* border: 1px solid red; */
     width: 24vw;
-    margin-top: -8px;
+    margin-top: -4px;
     z-index: 99;
-    transform-origin: top left;
+    transform-origin: 4vw 4vw;
     animation: slide 4s linear infinite;
     animation-play-state: paused;
-    /* border: 1px solid red; */
 }
+
 @keyframes slide {
     0% {
         transform: rotate(0deg);
@@ -84,6 +114,7 @@
 .app .disc-container .disc .icon-wrapper .icon-play {
     display: none;
 }
+
 .app .disc-container .disc .icon-wrapper .icon-play.active {
     display: block;
 }
@@ -91,6 +122,7 @@
 .app .disc-container .disc .icon-wrapper .icon-pause {
     display: none;
 }
+
 .app .disc-container .disc .icon-wrapper .icon-pause.active {
     display: block;
 }
@@ -122,8 +154,6 @@
     width: 44.5vw;
     height: 44.5vw;
     border-radius: 50%;
-    background: url(/src/img/test-bg.jpg) no-repeat center;
-    background-size: 44.5vw 44.5vw;
     animation: circle 10s infinite linear;
     animation-play-state: paused;
 }
@@ -135,4 +165,12 @@
     100% {
         transform: rotate(360deg);
     }
+}
+.app .disc-container .lyric {
+    border: 1px solid blue;
+}
+
+.app .links {
+    border: 1px solid red;
+    margin-bottom: 10vw;
 }
