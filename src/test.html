@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>转啊转</title>
+    <title>水平滚动</title>
     <style>
         .app-background {
             display: flex;
@@ -64,11 +64,38 @@
             background: url(//p1.music.126.net/_ZIyHUML8sXBvJXqLdQDOg==/105553116278617.jpg?imageView&thumbnail=360x0&quality=75&tostatic=0) no-repeat center;
             background-size: 44px 44px; */
         }
+
+        .marquee {
+            border: 1px solid red;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 400px;
+            margin: auto;
+            padding: 10px;
+            position: relative;
+        }
+
+        .marquee span {
+            display: block;
+            border: 1px solid blue;
+            animation: slide 4s linear infinite; 
+        }
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-400px);
+            }
+            100% {
+                transform: translateX(-400px);
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="app-background">
+    <!-- <div class="app-background">
         <div class="app">
         </div>
         <div class="ring">
@@ -76,7 +103,16 @@
                 <div class="cover"></div>
             </div>
         </div>
+    </div> -->
+    <span class="text">该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！</span>
+    <div id="marquee" class="marquee">
+       
     </div>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+        var textElement = $('span.text')
+        console.log(textElement.outerWidth(false))
+    </script>
 </body>
 
 </html>

@@ -21,6 +21,9 @@
             })
             // 获取歌曲信息
             $('audio#songSource').attr('src', data.url)
+            // 获取歌曲名字以及歌手名字
+            $('.app .top .song-description .song-name').text(data.name)
+            $('.app .top .song-description .song-singer').text(data.singer)
         },
         play() {
             let audio = $(this.el).find('audio')[0]
@@ -81,6 +84,7 @@
                 window.location.href = '/src/index.html'
             })
             this.view.$el.find('svg#play').on('click', (e) => {
+                // 点击播放时
                 console.log(e.currentTarget)
                 console.log($(e.currentTarget))
                 $(e.currentTarget).removeClass('active')
@@ -90,6 +94,7 @@
                 this.view.play()
             })
             this.view.$el.find('svg#pause').on('click', (e) => {
+                // 点击暂停时
                 console.log(e.currentTarget)
                 console.log($(e.currentTarget))
                 $(e.currentTarget).removeClass('active')
@@ -99,14 +104,16 @@
                 this.view.pause()
             })
             this.view.$el.find('audio#songSource').on('ended', (e) => {
+                // 歌曲播放完毕时
                 console.log('播放完毕')
                 this.view.$el.find('svg#play').addClass('active')
                 this.view.$el.find('svg#pause').removeClass('active')
-                this.view.$el.find('div#pointer').css('animation-play-state', 'paused')
+                this.view.$el.find('img#pointer').css('animation-play-state', 'paused')
                 this.view.$el.find('div#cover').css('animation-play-state', 'paused')
             })
         },
         getSongId() {
+            // 获取 url 中 song 的 id 参数
             //console.log(window.location.search)
             let search = window.location.search
             if (search.indexOf('?') === 0) {

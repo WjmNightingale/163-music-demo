@@ -37,25 +37,67 @@
 }
 .app .top .song-description {
     /* border: 1px solid red; */
+    width: 60vw;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     align-items: center;
+    letter-spacing: 2px;
 }
 .app .top .song-description .song-name {
+    /* border: 1px solid red; */
+    display: block;
+    width: 50vw;
+    overflow: hidden;
     color: #ddd;
-    font-size: 16px;
+    font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+/* .app .top .song-description:hover .song-name {
+    transform: translateX(50vw);
+    animation: scroll 6s linear 1s infinite;
+}
+@keyframes scroll {
+    0% {
+        transform: translateX(50vw);
+    }
+    12.5% {
+        transform: translateX(25vw);
+    }
+    25% {
+        transform: translateX(0vw);
+    }
+    37.5% {
+        transform: translateX(0vw);
+    }
+    50% {
+        transform: translateX(0vw);
+    }
+    62.5% {
+        transform: translateX(0vw);
+    }
+    75% {
+        transform: translateX(0vw);
+    }
+    87.5% {
+        transform: translateX(-25vw);
+    }
+    100% {
+        transform: translateX(-50vw);
+    }
+} */
+.app .top .song-description .song-singer {
+    display: block;
+    color: #ddd;
+    font-size: 12px;
 }
 .app .top .icon-share {
     width: 8vw;
     height: 8vw;
     fill: #ddd;
 }
-.app .top .song-description .song-singer {
-    color: #ddd;
-    font-size: 12px;
-}
-
 .app .disc-container {
     border-top: 2px solid gray;
     display: flex;

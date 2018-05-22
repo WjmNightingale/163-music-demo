@@ -99,10 +99,14 @@ body {
 }
 
 .app>.feature>aside>.songList-container>.songsList>li {
+    width: 194px;
     margin-bottom: 2px;
+    overflow: hidden;
     padding: 10px;
     border-bottom: 1px solid #ddd;
     color: gray;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .app>.feature>aside>.songList-container>.songsList>li:hover {
