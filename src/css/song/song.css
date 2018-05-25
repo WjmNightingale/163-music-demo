@@ -113,12 +113,18 @@
     width: 24vw;
     margin-top: -4px;
     z-index: 99;
-    transform-origin: 4vw 4vw;
-    animation: slide 4s linear infinite;
-    animation-play-state: paused;
+    transform-origin: 2vw 0vw;
+    margin-left: 16vw;
+    transform: rotate(-28deg);
+    transition: all 0.5s linear;
+    /* animation: slide 4s linear infinite;
+    animation-play-state: paused; */
+}
+.app .disc-container .pointer.active {
+    transform: rotate(6deg);
 }
 
-@keyframes slide {
+/* @keyframes slide {
     0% {
         transform: rotate(0deg);
     }
@@ -128,7 +134,7 @@
     100% {
         transform: rotate(0deg);
     }
-}
+} */
 
 .app .disc-container .disc {
     display: flex;
