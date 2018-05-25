@@ -156,7 +156,7 @@
 .app .disc-container .disc .icon-wrapper>svg {
     width: 20vw;
     height: 20vw;
-    fill: gray;
+    fill: #eee;
 }
 
 .app .disc-container .disc .icon-wrapper .icon-play {
@@ -236,6 +236,23 @@
 
 
 .app .links {
-    border: 1px solid red;
+    padding: 4px;
+    /* border: 1px solid red; */
     margin-bottom: 10vw;
+    display: flex;
+}
+.app .links a {
+    display: block;
+    margin: 0 4vw; 
+    width: 38vw;
+    height: 12vw;
+    line-height: 12vw;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+.app .links a.main {
+    background: #c62f2f;
 }
