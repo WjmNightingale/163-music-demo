@@ -208,9 +208,26 @@
         transform: rotate(360deg);
     }
 }
-.app .disc-container .lyric {
-    border: 1px solid blue;
+.app .container .disc-container .lyric {
+    width: 80vw;
+    height: 40vw;
+    padding: 2vw;
+    overflow: hidden;
 }
+.app .container .disc-container .lyric .line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 12vw;
+    font-size: 18px;
+    color: #ddd;
+}
+.app .container .disc-container .lyric .line.active {
+    color: #c62f2f;
+    transform: scale(1.2);
+}
+
 
 .app .links {
     border: 1px solid red;

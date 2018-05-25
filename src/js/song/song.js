@@ -26,10 +26,53 @@
             $('.app .top .song-description .song-singer').text(data.singer)
 
             // 获取歌词  正则表达式来过滤时间轴/\[([\d:]+)\](.+)/
-
+            let lyric = data.lyric
+            lyric = lyric.split('\n')
+            console.log('转换后---')
+            console.log(lyric)
             let regex = /\[([\d:.]+)\](.+)/
+            if (regex.test(lyric)) {
+                let matchLyric = lyric.map(item => {
+                    console.log(item)
+                    item = regex.exec(item)
+                    console.log('匹配--')
+                    console.log(item)
+                    return item
+                })
+                console.log('正则匹配后--')
+                console.log(matchLyric)
+                let pList = matchLyric.map((item) => $('<p></p>').text(item[2]).attr('data-time', item[1]).addClass('line'))
+                console.log(pList)
+                pList.map((p) => {
+                    $('div.lines').append(p)
+                })
+            } else {
+                // 没有上传lyric格式的歌词
+                console.log('无歌词')
+                let p = $('<p></p>').text(lyric).addClass('line')
+                $('div.lines').append(p)
+            }
 
             // audio.ontimeupdate  audio.currentTime
+        },
+        getTimestamp() {
+            // 获取歌词时间戳
+            let timestamp = []
+            let allP = $('p.line')
+            if (allP.length > 1) {
+                for (let i = 0; i < allP.length; i++) {
+                    console.log(allP[i].getAttribute('data-time'))
+                    let time = allP[i].getAttribute('data-time').split(':')
+                    let minute = time[0]
+                    let second = time[1]
+                    time = parseFloat(minute, 10) * 60 + parseFloat(second, 10)
+                    timestamp.push(time)
+                }
+                console.log('获取歌词时间戳')
+                console.log($('p.line').eq(1).offset().top)
+                console.log(timestamp)
+            }
+            return timestamp
         },
         play() {
             let audio = $(this.el).find('audio')[0]
@@ -38,6 +81,32 @@
         pause() {
             let audio = $(this.el).find('audio')[0]
             audio.pause()
+        },
+        showLyric(currentTime, timestamp) {
+            console.log('显示时间戳')
+            if (timestamp.length > 0) {
+                let targetIndex // 正在播放的歌词
+                for (let i = 0; i < timestamp.length - 1; i++) {
+                    if (i === timestamp.length - 1) {
+                        targetIndex = timestamp.length - 1
+                    } else if (currentTime >= timestamp[i] && currentTime < timestamp[i + 1]) {
+                        targetIndex = i
+                        break
+                    }
+                }
+                targetTop = $('p.line').eq(1).offset().top
+                console.log(targetTop)
+                currentTop = $('p.line').eq(targetIndex).offset().top
+                console.log(targetIndex)
+                console.log(currentTop)
+                $('div.lines').css({
+                    'transform': `translateY(${targetTop - currentTop}px)`
+                })
+                $('p.line').eq(targetIndex).addClass('active')
+                $('p.line').eq(targetIndex).siblings().removeClass('active')
+            } else {
+                $('p.line').addClass('active')
+            }
         }
     }
     let model = {
@@ -85,8 +154,8 @@
             this.bindEvents()
         },
         bindEvents() {
-            console.log('暂停播放函数')    
-            this.view.$el.find('svg#back').on('click',(e) => {
+            console.log('暂停播放函数')
+            this.view.$el.find('svg#back').on('click', (e) => {
                 window.location.href = '/src/index.html'
             })
             this.view.$el.find('svg#play').on('click', (e) => {
@@ -116,6 +185,13 @@
                 this.view.$el.find('svg#pause').removeClass('active')
                 this.view.$el.find('img#pointer').css('animation-play-state', 'paused')
                 this.view.$el.find('div#cover').css('animation-play-state', 'paused')
+            })
+            this.view.$el.find('audio#songSource').on('timeupdate', (e) => {
+                // 当前歌曲播放时间
+                console.log(e.currentTarget.currentTime)
+                let currentTime = e.currentTarget.currentTime
+                let timestamp = this.view.getTimestamp()
+                this.view.showLyric(currentTime, timestamp)
             })
         },
         getSongId() {

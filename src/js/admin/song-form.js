@@ -17,18 +17,20 @@
         render(data = {}) {
             console.log('歌曲信息详情页开始渲染--')
             console.log(data)
-            let placeholders = 'name singer url cover'.split(' ')
+            let placeholders = 'name singer url cover lyric'.split(' ')
             placeholders.map((string) => {
                 if (string === 'cover') {
                     console.log('歌曲信息详情页面--歌曲封面信息--')
                     console.log(data[string])
                     let imgUrl
                     if (data[string] === null) {
-                        imgUrl = '#'
+                        imgUrl = '/src/img/test-bg.jpg'
                     } else {
                         imgUrl = data[string].url
                     }
                     $(this.el).find('img#coverImg').attr('src', imgUrl)
+                } else if (string === 'lyric') {
+                    $(this.el).find(`textarea[name=${string}]`).val(data[string] || '暂无歌词')
                 } else {
                     $(this.el).find(`input[value=${string}]`).val(data[string] || '')
                 }
@@ -36,9 +38,11 @@
             if (data.id) {
                 $(this.el).find('.heading > span').text('编辑歌曲')
                 $(this.el).find('img#coverImg').addClass('active')
+                $(this.el).find('label.upload').text('更改歌曲封面')
             } else {
-                $(this.el).find('img#coverImg').removeClass('active')
                 $(this.el).find('.heading > span').text('新建歌曲')
+                // $(this.el).find('img#coverImg').removeClass('active')
+                $(this.el).find('label.upload').text('上传歌曲封面')
             }
         },
         reset() {
@@ -68,6 +72,7 @@
             name: '',
             singer: '',
             url: '',
+            lyric: '',
             origin: 'songList',
             editAndSave: true,
             cover: null
@@ -77,6 +82,7 @@
             name: '',
             singer: '',
             url: '',
+            lyric: '',
             origin: 'songList',
             editAndSave: true,
             cover: null
@@ -110,7 +116,7 @@
             this.view.init()
             this.view.render(this.model.data)
             this.bindLogout()
-            this.bindInputChange()
+            this.bindContentChange()
             this.bindRemindConfirm()
             this.bindRemindCancel()
             this.bindSubmit()
@@ -129,12 +135,28 @@
                 window.alert('即将退出登录状态')
             })
         },
-        bindInputChange() {
+        bindContentChange() {
+            // 监听input内容变化
             this.view.$el.on('change', 'input', (e) => {
                 // 歌曲信息发生改变了
                 console.log('歌曲信息发生改变了')
+                if (e.currentTarget.getAttribute('name') === 'cover') {
+                    console.log('图片变化了--预览显示图片')
+                    console.log( e.currentTarget.files[0])
+                    $('img#coverImg').attr('src',window.URL.createObjectURL( e.currentTarget.files[0]))
+                    $('img#coverImg').on('load',(e) => {
+                        window.URL.revokeObjectURL($('img#coverImg').attr('src'))
+                    })
+                }
                 this.model.data.editAndSave = false
                 window.eventHub.emit('songIsEdit', this.model.data)
+            })
+            // 监听textarea内容变化
+            this.view.$el.on('change','textarea',(e) => {
+                 // 歌曲信息发生改变了
+                 console.log('歌曲信息发生改变了')
+                 this.model.data.editAndSave = false
+                 window.eventHub.emit('songIsEdit', this.model.data)
             })
         },
         bindRemindConfirm() {
@@ -180,7 +202,7 @@
                 }
                 console.log('这里是保存按钮')
                 this.model.data.editAndSave = true
-                let need = 'name singer url cover'.split(' ')
+                let need = 'name singer url cover lyric'.split(' ')
                 let data = {}
                 need.map((string) => {
                     if (string === 'cover') {

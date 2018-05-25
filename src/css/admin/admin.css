@@ -435,8 +435,12 @@ body {
     text-align: center;
 }
 .app>.feature>main>.editArea>form >.form-content>.right>textarea {
+    padding: 4px;
     border-radius: 5px; 
-    background-color: red;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    /* background-color: red; */
 }
 
 .app>.feature>main>.editArea>form input[type='submit'] {

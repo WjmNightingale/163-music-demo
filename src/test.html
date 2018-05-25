@@ -5,113 +5,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>水平滚动</title>
+    <title>上传图片预览组件</title>
     <style>
-        .app-background {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 100vh;
-            position: relative;
-            /* background: red; */
+        .list {
+            padding: 10px;
         }
 
-        .app {
+        .list::after {
+            content: "";
+            display: block;
+            clear: both;
+            height: 0;
+            line-height: 0;
+            font-size: 0;
+        }
+
+        .list li {
+            position: relative;
+            float: left;
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .list li:before {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 1px;
+            margin-top: -1px;
+            margin-left: -15px;
+            background-color: #ccc;
+        }
+
+        .list li:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 30px;
+            margin-top: -15px;
+            margin-left: -1px;
+            background-color: #ccc;
+        }
+
+        .list li img {
+            position: relative;
+            z-index: 2;
+            display: block;
             width: 100%;
             height: 100%;
-            content: '';
-            background: transparent url(/src/img/test-bg.jpg) no-repeat center;
-            background-size: cover;
-            filter: blur(5px);
-            z-index: -99;
-            background-color: aqua;
-
-
         }
 
-        .ring {
-            width: 200px;
-            height: 200px;
-            background-color: yellow;
-            z-index: 1;
-            /* width: 72px;
-            height: 72px;
-            background: url(//s3.music.126.net/m/s/img/disc-ip6.png?69796123ad7cfe95781ea38aac8f2d48) no-repeat center;
-            background-size: 72px 72px;
-            display: flex;
-            justify-content: center;
-            align-items: center; */
-        }
-
-        .light {
-            /* width: 72px;
-            height: 72px;
-            background: url(//s3.music.126.net/m/s/img/disc_light-ip6.png?996fc8a2bc62e1ab3f51f135fc459577) no-repeat center;
-            background-size: 72px 72px;
-            display: flex;
-            justify-content: center;
-            align-items: center; */
-        }
-
-        .cover {
-            /* width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: url(//p1.music.126.net/_ZIyHUML8sXBvJXqLdQDOg==/105553116278617.jpg?imageView&thumbnail=360x0&quality=75&tostatic=0) no-repeat center;
-            background-size: 44px 44px; */
-        }
-
-        .marquee {
-            border: 1px solid red;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 400px;
-            margin: auto;
-            padding: 10px;
-            position: relative;
-        }
-
-        .marquee span {
+        .list input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 3;
             display: block;
-            border: 1px solid blue;
-            animation: slide 4s linear infinite; 
-        }
-        @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(-400px);
-            }
-            100% {
-                transform: translateX(-400px);
-            }
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            opacity: 0;
         }
     </style>
 </head>
 
 <body>
-    <!-- <div class="app-background">
-        <div class="app">
-        </div>
-        <div class="ring">
-            <div class="light">
-                <div class="cover"></div>
-            </div>
-        </div>
-    </div> -->
-    <span class="text">该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！该系统于2017-06-21进行维护，望相互告知！！！</span>
-    <div id="marquee" class="marquee">
-       
+    <div class="app">
+        <ul class="list">
+            <li>
+                <input type="file" onchange="handleFiles(this.files,this.parentNode)">
+            </li>
+            <li>
+                <input type="file" onchange="handleFiles(this.files,this.parentNode)">
+            </li>
+            <li>
+                <input type="file" onchange="handleFiles(this.files,this.parentNode)">
+            </li>
+        </ul>
     </div>
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script>
-        var textElement = $('span.text')
-        console.log(textElement.outerWidth(false))
+        function handleFiles(file, obj) {
+            let content = obj.innerHtml
+            // if (content.indexOf("img") > 0) {
+            //     let pic = obj.getElementsByTagName("img")
+            //     for (let i = 0; i < pic.length; i++) {
+            //         obj.removeChild(pic[i])
+            //     }
+            //     createImg()
+            // } else {
+            createImg()
+            // }
+
+            function createImg() {
+                let img = document.createElement("img")
+                img.src = window.URL.createObjectURL(file[0])
+                img.onload = function () {
+                    window.URL.revokeObjectURL(this.src)
+                }
+                obj.appendChild(img)
+            }
+        }
     </script>
 </body>
 
