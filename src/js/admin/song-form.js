@@ -24,7 +24,7 @@
                     console.log(data[string])
                     let imgUrl
                     if (data[string] === null) {
-                        imgUrl = '/src/img/test-bg.jpg'
+                        imgUrl = '/src/img/tmp-image.png'
                     } else {
                         imgUrl = data[string].url
                     }
