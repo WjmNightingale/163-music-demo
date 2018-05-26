@@ -8,7 +8,7 @@
             this.$el = $(this.el)
         },
         render(data) {
-            console.log('渲染函数--')
+            console.log('渲染函数--')   
             console.log(data)
             // $(this.el).html(this.template.replace('{{url}}',data.url))
             // 渲染播放背景
@@ -28,21 +28,21 @@
             // 获取歌词  正则表达式来过滤时间轴/\[([\d:]+)\](.+)/
             let lyric = data.lyric
             lyric = lyric.split('\n')
-            console.log('转换后---')
-            console.log(lyric)
+            // console.log('转换后---')
+            // console.log(lyric)
             let regex = /\[([\d:.]+)\](.+)/
             if (regex.test(lyric)) {
                 let matchLyric = lyric.map(item => {
-                    console.log(item)
+                    // console.log(item)
                     item = regex.exec(item)
-                    console.log('匹配--')
-                    console.log(item)
+                    // console.log('匹配--')
+                    // console.log(item)
                     return item
                 })
-                console.log('正则匹配后--')
-                console.log(matchLyric)
+                // console.log('正则匹配后--')
+                // console.log(matchLyric)
                 let pList = matchLyric.map((item) => $('<p></p>').text(item[2]).attr('data-time', item[1]).addClass('line'))
-                console.log(pList)
+                // console.log(pList)
                 pList.map((p) => {
                     $('div.lines').append(p)
                 })
@@ -61,16 +61,16 @@
             let allP = $('p.line')
             if (allP.length > 1) {
                 for (let i = 0; i < allP.length; i++) {
-                    console.log(allP[i].getAttribute('data-time'))
+                    // console.log(allP[i].getAttribute('data-time'))
                     let time = allP[i].getAttribute('data-time').split(':')
                     let minute = time[0]
                     let second = time[1]
                     time = parseFloat(minute, 10) * 60 + parseFloat(second, 10)
                     timestamp.push(time)
                 }
-                console.log('获取歌词时间戳')
-                console.log($('p.line').eq(1).offset().top)
-                console.log(timestamp)
+                // console.log('获取歌词时间戳')
+                // console.log($('p.line').eq(1).offset().top)
+                // console.log(timestamp)
             }
             return timestamp
         },
@@ -83,22 +83,21 @@
             audio.pause()
         },
         showLyric(currentTime, timestamp) {
-            console.log('显示时间戳')
+            // console.log('显示时间戳')
             if (timestamp.length > 0) {
                 let targetIndex // 正在播放的歌词
                 for (let i = 0; i < timestamp.length - 1; i++) {
-                    if (i === timestamp.length - 1) {
+                    if (currentTime >= timestamp[timestamp.length-1]) {
                         targetIndex = timestamp.length - 1
                     } else if (currentTime >= timestamp[i] && currentTime < timestamp[i + 1]) {
                         targetIndex = i
                         break
                     }
                 }
+                console.log('第'+targetIndex+'歌词')
                 targetTop = $('p.line').eq(1).offset().top
-                console.log(targetTop)
                 currentTop = $('p.line').eq(targetIndex).offset().top
-                console.log(targetIndex)
-                console.log(currentTop)
+               
                 $('div.lines').css({
                     'transform': `translateY(${targetTop - currentTop}px)`
                 })
@@ -120,10 +119,16 @@
             console.log('getSongById')
             let query = new AV.Query('Song')
             return query.get(id).then((song) => {
-                Object.assign(this.data, {
-                    id: song.id,
-                    ...song.attributes
-                })
+                let newData = Object.assign({id:song.id},song.attributes)
+                console.log('心数据--')
+                console.log(newData)
+                Object.assign(this.data,newData)
+                console.log('合成后的数据--')
+                console.log(this.data)
+                // Object.assign(this.data, {
+                //     id: song.id,
+                //     ...song.attributes
+                // })
                 // return {
                 //     id: song.id,
                 //     ...song.attributes

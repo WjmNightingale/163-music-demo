@@ -6,7 +6,9 @@
             console.log('这里是最新音乐')
         },
         render(data) {
-            let {songs} = data
+            let {
+                songs
+            } = data
             songs.map((song) => {
                 let $li = $(`
                 <li>
@@ -36,10 +38,9 @@
             let query = new AV.Query('Song')
             return query.find().then((songs) => {
                 this.data.songs = songs.map((song) => {
-                    return {
-                        id: song.id,
-                        ...song.attributes
-                    }
+                    return Object.assign({
+                        id: song.id
+                    }, song.attributes)
                 })
                 return songs
             })
@@ -56,5 +57,5 @@
             })
         }
     }
-    controller.init(view,model)
+    controller.init(view, model)
 }
