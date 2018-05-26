@@ -170,7 +170,7 @@
                 $(e.currentTarget).removeClass('active')
                 $(e.currentTarget).siblings().addClass('active')
                 this.view.$el.find('img#pointer').addClass('active')
-                this.view.$el.find('div#cover').css('animation-play-state', 'running')
+                this.view.$el.find('div#cover').addClass('active')
                 this.view.play()
             })
             this.view.$el.find('svg#pause').on('click', (e) => {
@@ -180,7 +180,7 @@
                 $(e.currentTarget).removeClass('active')
                 $(e.currentTarget).siblings().addClass('active')
                 this.view.$el.find('img#pointer').removeClass('active')
-                this.view.$el.find('div#cover').css('animation-play-state', 'paused')
+                this.view.$el.find('div#cover').removeClass('active')
                 this.view.pause()
             })
             this.view.$el.find('audio#songSource').on('ended', (e) => {
@@ -188,8 +188,8 @@
                 console.log('播放完毕')
                 this.view.$el.find('svg#play').addClass('active')
                 this.view.$el.find('svg#pause').removeClass('active')
-                this.view.$el.find('img#pointer').css('animation-play-state', 'paused')
-                this.view.$el.find('div#cover').css('animation-play-state', 'paused')
+                this.view.$el.find('img#pointer').removeClass('active')
+                this.view.$el.find('div#cover').removeClass('active')
             })
             this.view.$el.find('audio#songSource').on('timeupdate', (e) => {
                 // 当前歌曲播放时间
