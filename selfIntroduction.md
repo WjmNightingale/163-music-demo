@@ -25,7 +25,8 @@
 至此，所出现的异常行为以及页面得到了解决。以下是修改过的管理员操作示意图
 
 ![new](https://github.com/WjmNightingale/163-music-demo/blob/master/gif/new.gif)
-
+<br/>
+<br/>
 ![editAndSave](https://github.com/WjmNightingale/163-music-demo/blob/master/gif/editAndSave.gif)
 
 ## 个人简历
