@@ -206,20 +206,20 @@
     -webkit-animation: circle 10s infinite linear;
     -moz-animation: circle 10s infinite linear;
     -o-animation: circle 10s infinite linear;
-    /* animation-play-state: paused;
+    animation-play-state: paused;
     -webkit-animation-play-state: paused;
     -moz-animation-play-state: paused;
-    -o-animation-play-state: paused; */
+    -o-animation-play-state: paused;
 }
 .app .disc-container .disc .cover.active {
-    /* animation-play-state:running;
+    animation-play-state:running;
     -webkit-animation-play-state: running;
     -moz-animation-play-state: running;
-    -o-animation-play-state: running; */
-    animation: circle 10000000s infinite linear;
+    -o-animation-play-state: running;
+    /* animation: circle 10000000s infinite linear;
     -webkit-animation: circle 10000000s infinite linear;
     -moz-animation: circle 10000000s infinite linear;
-    -o-animation: circle 10000000s infinite linear;
+    -o-animation: circle 10000000s infinite linear; */
 }
 
 @keyframes circle {
