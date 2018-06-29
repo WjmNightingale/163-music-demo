@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片组件</title>
+    <script src="../vendors/qiniu.min.js"></script>
+    <script src="../vendors/plupload.min.js"></script>
+    <script src="../vendors/moxie.js"></script>
+    <script src="../vendors/jquery.min.js"></script>
+    <style>
+        .uploadArea {
+            display: block;
+            position: relative;
+            background: white;
+        }
+
+        .uploadArea>.draggable {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 600px;
+            height: 300px;
+            border-radius: 4px;
+            border: 2px dashed gray;
+            cursor: pointer;
+            color: gray;
+        }
+
+        .uploadArea>.clickable {
+            margin-top: 20px;
+            padding: 6px 6px;
+            border-radius: 5px;
+            border: none;
+            font-size: 20px;
+            color: #fefcfc;
+            cursor: pointer;
+            background: #c62f2f;
+            outline: none;
+        }
+
+        .uploadArea>.uploadStatus {
+            display: none;
+            font-size: 20px;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            z-index: 1;
+            text-indent: -9999em;
+            animation: load-effect 1s infinite linear;
+        }
+
+        .uploadArea>.uploadStatus.active {
+            display: block;
+        }
+
+        /* css3-loading动画 */
+
+        @keyframes load-effect {
+            0% {
+                box-shadow: 0 -3em 0 .2em #c62f2f, /*上*/
+                2em -2em 0 0 #c62f2f, /*右上*/
+                3em 0 0 -.5em #c62f2f, /*右*/
+                2em 2em 0 -.5em #c62f2f, /*右下*/
+                0 3em 0 -.5em #c62f2f, /*下*/
+                -2em 2em 0 -.5em #c62f2f, /*左下*/
+                -3em 0 0 -.5em #c62f2f, /*左*/
+                -2em -2em 0 0 #c62f2f;
+                /*左上*/
+            }
+            12.5% {
+                box-shadow: 0 -3em 0 0 #c62f2f, 2em -2em 0 .2em #c62f2f, 3em 0 0 0 #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+            }
+            25% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 0 #c62f2f, 3em 0 0 .2em #c62f2f, 2em 2em 0 0 #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+            }
+            37.5% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 0 #c62f2f, 2em 2em 0 .2em #c62f2f, 0 3em 0 0 #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+            }
+            50% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 0 #c62f2f, 0 3em 0 .2em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 -.5em #c62f2f;
+            }
+            62.5% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 0 #c62f2f, -2em 2em 0 .2em #c62f2f, -3em 0 0 0 #c62f2f, -2em -2em 0 -.5em #c62f2f;
+            }
+            75% {
+                box-shadow: 0 -3em 0 -.5em #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 .2em #c62f2f, -2em -2em 0 0 #c62f2f;
+            }
+            87.5% {
+                box-shadow: 0 -3em 0 0 #c62f2f, 2em -2em 0 -.5em #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 0 #c62f2f, -3em 0 0 0 #c62f2f, -2em -2em 0 .2em #c62f2f;
+            }
+            100% {
+                box-shadow: 0 -3em 0 .2em #c62f2f, 2em -2em 0 0 #c62f2f, 3em 0 0 -.5em #c62f2f, 2em 2em 0 -.5em #c62f2f, 0 3em 0 -.5em #c62f2f, -2em 2em 0 -.5em #c62f2f, -3em 0 0 -.5em #c62f2f, -2em -2em 0 0 #c62f2f;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="uploadArea" class="uploadArea">
+        <div id="uploadContainer" class="draggable">
+            <span>点击或拖拽上传文件</span>
+            <span>建议文件大小不超过40mb</span>
+        </div>
+        <button id="uploadButton" class="clickable">
+            选择文件
+        </button>
+        <!-- 上传动画 -->
+        <div class="text">
+            图片路径---<p id="imgUrl"></p>
+        </div>
+        <div id="uploadStatus" class="uploadStatus">loading...</div>
+    </div>
+    <script>
+        let uploader = Qiniu.uploader({
+            runtimes: 'html5',
+            browse_button: 'uploadButton',
+            uptoken_url: 'http://localhost:8888/uptoken',
+            domain: 'p7fonu2ax.bkt.clouddn.com',
+            get_new_uptoken: false,
+            container: 'uploadContainer',
+            max_file_size: '40mb',
+            max_retries: 3,
+            dragdrop: true,
+            drop_element: 'uploadContainer',
+            chunk_size: '4mb',
+            auto_start: true,
+            init: {
+                'FilesAdded': function (up, files) {
+                    plupload.each(files, function (file) {
+                        // 文件添加进队列后,处理相关的事情
+                    });
+                },
+                'BeforeUpload': (up, file) => {
+                    // 每个文件上传前,处理相关的事情
+                    uploadStatus.classList.add('active')
+
+                },
+                'UploadProgress': function (up, file) {
+                    // 每个文件上传时,处理相关的事情
+                },
+                'FileUploaded': function (up, file, info) {
+                    let domain = up.getOption('domain')
+                    let filename = JSON.parse(info.response).key
+                    let key = encodeURIComponent(filename)
+                    // 获取上传成功后的文件的Url
+                    //  'http://' + domain + '/' + key
+                    let sourceLink = `http://${domain}/${key}`
+                   console.log(sourceLink)
+                    uploadStatus.classList.remove('active')
+                },
+                'Error': function (up, err, errTip) {
+                    //上传出错时,处理相关的事情
+                },
+                'UploadComplete': function () {
+                    //队列文件处理完毕后,处理相关的事情
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
